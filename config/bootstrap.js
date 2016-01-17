@@ -9,13 +9,30 @@
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.bootstrap.html
  */
 
-module.exports.bootstrap = function(cb) {
-  var CronJob = require('cron').CronJob;
-  new CronJob('* * * * * *', function() {
-  WeekdayService.fun();
-  }, null, true, 'America/Los_Angeles');
+var CronJob = require('cron').CronJob;
 
-  // It's very important to trigger this callback method when you are finished
-  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
+module.exports.bootstrap = function(cb) {
+  
+  //Breakfast
+  
+  new CronJob('00 30 06 * * 1-5', function() {
+  SchedulingService.breakfast();
+  }, null, true, 'America/Chicago');
+  
+  //Lunch
+  
+  new CronJob('00 00 10 * * 1-5', function() {
+  SchedulingService.lunch();
+  }, null, true, 'America/Chicago');
+  
+  //Dinner
+  
+  new CronJob('00 00 04 * * 1-5', function() {
+  SchedulingService.dinner();
+  }, null, true, 'America/Chicago');
+
+  // Callback Trigger
+  
   cb();
+  
 };
