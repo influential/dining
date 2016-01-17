@@ -1,5 +1,5 @@
-module.exports.misc = {
+module.exports = {
 
-    sails.config.port: 80
+    port: 80
 
 };
