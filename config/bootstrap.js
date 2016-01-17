@@ -12,7 +12,7 @@
 module.exports.bootstrap = function(cb) {
   var CronJob = require('cron').CronJob;
   new CronJob('* * * * * *', function() {
-  testService.fun();
+  WeekdayService.fun();
   }, null, true, 'America/Los_Angeles');
 
   // It's very important to trigger this callback method when you are finished
