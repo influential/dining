@@ -1,7 +1,5 @@
-module.exports.connections = {
+module.exports.misc = {
 
-  localDiskDb: {
     sails.config.port: 80
-  }
 
 };
