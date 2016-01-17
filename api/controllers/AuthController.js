@@ -23,6 +23,15 @@ module.exports = {
 			console.log(requestToken);
 			console.log(requestTokenSecret);
 			console.log(results);
+			twitter.getAccessToken(requestToken, requestTokenSecret, oauth_verifier, function(error, accessToken, accessTokenSecret, results) {
+				if (error) {
+					console.log(error);
+				} else {
+					console.log(accessToken);
+					console.log(accessTokenSecret);
+					console.log(results);
+				}
+			});
 		}
 	});
 	
