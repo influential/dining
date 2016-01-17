@@ -9,7 +9,7 @@ var twitterAPI = require('node-twitter-api');
 
 module.exports = {
 	
-	connect: {
+	connect: function(req, res) {
 		
 	var twitter = new twitterAPI({
 	    consumerKey: 'ppu9vZOIZMIcA6ZcUflQZHiy7',
