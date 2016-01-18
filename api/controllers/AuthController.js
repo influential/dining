@@ -21,8 +21,7 @@ module.exports = {
 			if (error) {
 				console.log(error);
 			} else {
-				console.log(accessToken);
-				console.log(accessTokenSecret);
+				return res.send("AccessToken: " + accessToken + "\nAccessTokenSecret: " + accessTokenSecret);
 			}
 		});
 	} else {
