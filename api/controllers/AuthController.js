@@ -35,6 +35,7 @@ module.exports = {
 			} else {
 				process.env.RT = requestToken;
 				process.env.RTS = requestTokenSecret;
+				console.log(requestToken);
 				twitter.getAuthUrl(requestToken);
 			}
 		});
