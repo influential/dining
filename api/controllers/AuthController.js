@@ -14,7 +14,7 @@ module.exports = {
 	var twitter = new twitterAPI({
 	    consumerKey: 'ppu9vZOIZMIcA6ZcUflQZHiy7',
 	    consumerSecret: 'XvS1jya2OgbFEWmM7bPEDlBhZVw4Pw3IPQ4kXgVj6N0wkIAgWl',
-	    callback: 'http://104.131.2.65/'
+	    callback: 'http://104.131.2.65/twitter'
 	});
 	if(req.param('oauth_verifier')) {
 		console.log("yes");
