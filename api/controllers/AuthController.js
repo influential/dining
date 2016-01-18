@@ -12,8 +12,8 @@ module.exports = {
 	connect: function(req, res) {
 		
 	var twitter = new twitterAPI({
-	    consumerKey: process.env.OAUTH_CK,
-	    consumerSecret: process.env.OAUTH_CKS,
+	    consumerKey: sails.config.oauth.CK,
+	    consumerSecret: sails.config.oauth.CKS,
 	    callback: 'http://104.131.2.65/twitter'
 	});
 	console.log(sails.config);
