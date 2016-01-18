@@ -12,8 +12,8 @@ module.exports = {
 	connect: function(req, res) {
 		
 	var twitter = new twitterAPI({
-	    consumerKey: 'ppu9vZOIZMIcA6ZcUflQZHiy7',
-	    consumerSecret: 'XvS1jya2OgbFEWmM7bPEDlBhZVw4Pw3IPQ4kXgVj6N0wkIAgWl',
+	    consumerKey: process.env.oauth.CK,
+	    consumerSecret: process.env.oauth.CKS,
 	    callback: 'http://104.131.2.65/twitter'
 	});
 	if(req.param('oauth_verifier')) {
@@ -35,10 +35,8 @@ module.exports = {
 			} else {
 				process.env.RT = requestToken;
 				process.env.RTS = requestTokenSecret;
-				console.log(requestToken);
-				//twitter.getAuthUrl(requestToken);
 				var url = "https://twitter.com/oauth/authenticate?oauth_token=" + requestToken;
-				res.redirect(url)
+				res.redirect(url);
 			}
 		});
 	}
