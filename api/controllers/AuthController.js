@@ -16,6 +16,7 @@ module.exports = {
 	    consumerSecret: process.env.OAUTH_CKS,
 	    callback: 'http://104.131.2.65/twitter'
 	});
+	console.log(process.env.OAUTH_CK);
 	if(req.param('oauth_verifier')) {
 		console.log("yes");
 		twitter.getAccessToken(process.env.RT, process.env.RTS, req.param('oauth_verifier'), function(error, accessToken, accessTokenSecret, results) {
