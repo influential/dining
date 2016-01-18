@@ -36,7 +36,9 @@ module.exports = {
 				process.env.RT = requestToken;
 				process.env.RTS = requestTokenSecret;
 				console.log(requestToken);
-				twitter.getAuthUrl(requestToken);
+				//twitter.getAuthUrl(requestToken);
+				var url = "https://twitter.com/oauth/authenticate?oauth_token=" + requestToken;
+				res.redirect(url)
 			}
 		});
 	}
