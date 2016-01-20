@@ -21,13 +21,13 @@ module.exports.bootstrap = function(cb) {
   
   //Lunch
   
-  new CronJob('00 00 10 * * 1-5', function() {
+  new CronJob('00 00 10 * * 0-6', function() {
   SchedulingService.lunch();
   }, null, true, 'America/Chicago');
   
   //Dinner
   
-  new CronJob('00 00 04 * * 1-5', function() {
+  new CronJob('00 00 04 * * 0-6', function() {
   SchedulingService.dinner();
   }, null, true, 'America/Chicago');
 
