@@ -56,6 +56,7 @@ module.exports =  {
 			      	if(bottom < element[i].getBoundingClientRect().bottom) bottom = element[i].getBoundingClientRect().bottom;
 			    }
 			    window.scrollTo(Math.round(left), Math.round(top));
+			    console.log(top + "-" + left);
 			    return {
 			        x: Math.round(left),
 			        y: Math.round(top),
@@ -85,8 +86,8 @@ module.exports =  {
 		  	yield nightmare.end();
 		  	return run;
 		})(function (err, result) {
-		  	if (err) return console.log(err);
-			console.log(result);
+		  	if (err) return console.log(err + "------");
+			console.log(result + "---");
 		});
 	},
   
