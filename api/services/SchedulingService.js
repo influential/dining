@@ -70,7 +70,7 @@ module.exports =  {
     });
     self.child.emit('screenshot', path, clip);
   }, selector);
-})
+});
 
 // run
 
@@ -115,28 +115,32 @@ module.exports =  {
 		}, selector);
 		});*/
 		
-		var date = new Date().toISOString().slice(0,10);
-		console.log("3");
-		vo(function* () {
+		//var date = new Date().toISOString().slice(0,10);
+		/*vo(function* () {
 			console.log("4");
-			
-		
 			var nightmare = Nightmare({ show: true });
 			var run = yield Nightmare()
   			.goto('http://google.com')
-  			.screenshotSelector('google.png', 'title');
+  			.screenshotSelector('google.png', 'title');*/
 			/*
 			var run = yield nightmare.goto('http://dining.iastate.edu/menus/' + location + '/' + date)
 			.inject('js', 'node_modules/jquery/dist/jquery.js')
 		  	.screenshotSelector('../../.tmp/public/' + location + '.png', 'selector', 0, 5);
 		  	console.log("after");*/
-		  	yield nightmare.end();
+		  /*	yield nightmare.end();
 		  	return run;
 		})(function (err, result) {
 		  	if (err) return console.log(err + "------");
 			console.log(result + "---");
+		});*/
+		vo(function* () {
+		yield Nightmare()
+  		.goto('http://google.com')
+  		.screenshotSelector('google.png', 'title')
+		})(function (err) {
+		  	if (err) return console.log(err + "------");
+			console.log("---");
 		});
-	},
   
 	tweet: function() {
     		var twitter = new twitterAPI({
