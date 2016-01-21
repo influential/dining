@@ -1,6 +1,6 @@
 var twitterAPI = require('node-twitter-api');
 var async = require('async');
-var nightmare = require('nightmare');
+var Nightmare = require('nightmare');
 
 module.exports =  {
   
@@ -37,7 +37,7 @@ module.exports =  {
   
 	snapshot: function(location, selector) {
   	    
-	    nightmare.action('screenshotSelector', function (path, selector, start, end, done) {
+	    Nightmare.action('screenshotSelector', function (path, selector, start, end, done) {
 	    	debug('.screenshotSelector()');
 		if (arguments.length > 3) done = start;
 		var self = this;
@@ -75,12 +75,12 @@ module.exports =  {
 		}, selector);
 		});
 		
-		var night = nightmare({ show: true });
+		var nightmare = Nightmare({ show: true });
 		var date = new Date().toISOString().slice(0,10);
-		var run = yield night.goto('http://dining.iastate.edu/menus/' + location + '/' + date)
+		var run = yield nightmare.goto('http://dining.iastate.edu/menus/' + location + '/' + date)
 		.inject('js', 'node_modules/jquery/dist/jquery.js')
 	  	.screenshotSelector('../../.tmp/public/' + location + '.png', 'selector', 0, 5);
-	  	yield night.end();
+	  	yield nightmare.end();
 	},
   
 	tweet: function() {
