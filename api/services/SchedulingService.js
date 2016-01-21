@@ -134,7 +134,7 @@ module.exports =  {
 			console.log(result + "---");
 		});*/
 		
-		vo(run)(function(err, result) {
+		/*vo(run)(function(err, result) {
 		  if (err) throw err;
 		});
 
@@ -144,7 +144,24 @@ module.exports =  {
   		.goto('http://google.com')
   		.screenshotSelector('google.png', 'title')
   		console.log(title);
-  		yield nightmare.end();
+  		yield nightmare.end();*/
+  		
+  		vo(function* () {
+		  var nightmare = Nightmare({ show: true });
+		  var link = yield nightmare
+		    .goto('http://yahoo.com')
+		    .type('input[title="Search"]', 'github nightmare')
+		    .click('.searchsubmit')
+		    .wait('.ac-21th')
+		    .evaluate(function () {
+		      return document.getElementsByClassName('ac-21th')[0].href;
+		    });
+		  yield nightmare.end();
+		  return link;
+		})(function (err, result) {
+		  if (err) return console.log(err);
+		  console.log(result);
+		});
 }
 
 		
