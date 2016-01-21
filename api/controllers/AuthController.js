@@ -38,6 +38,7 @@ module.exports = {
 	},
 	
 	test: function(req, res) {
+		console.log("1");
 		SchedulingService.snapshot('seasons', '.active-trail');
 		//return res.send("k");
 	}
