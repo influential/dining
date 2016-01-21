@@ -37,7 +37,7 @@ module.exports =  {
   
 	snapshot: function(location, selector) {
   	
-	    Nightmare.action('screenshotSelector', function (path, selector, start, end, done) {
+	    nightmare.action('screenshotSelector', function (path, selector, start, end, done) {
 	    	debug('.screenshotSelector()');
 		if (arguments.length > 3) done = start;
 		var self = this;
@@ -76,7 +76,7 @@ module.exports =  {
 		});
 		
 		var date = new Date().toISOString().slice(0,10);
-		yield Nightmare().goto('http://dining.iastate.edu/menus/' + location + '/' + date)
+		yield nightmare().goto('http://dining.iastate.edu/menus/' + location + '/' + date)
 		.inject('js', 'node_modules/jquery/dist/jquery.js')
 	  	.screenshotSelector('../../.tmp/public/' + location + '.png', 'selector', 0, 5)
 	  	.end();
