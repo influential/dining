@@ -39,7 +39,44 @@ module.exports =  {
 	snapshot: function(location, selector) {
   	    
   	    console.log("2");
-	    Nightmare.action('screenshotSelector', function (path, selector, start, end, done) {
+  	    Nightmare.action('screenshotSelector', function (path, selector, done) {
+  debug('.screenshotSelector()');
+  if (typeof selector === 'function') {
+    done = selector;
+    selector = path;
+    path = undefined;
+  };
+  var self = this;
+
+  this.evaluate_now(function (selector) {
+    var element = document.querySelector(selector);
+    if (element) {
+      var rect = element.getBoundingClientRect();
+      return {
+        x: Math.round(rect.left),
+        y: Math.round(rect.top),
+        width: Math.round(rect.width),
+        height: Math.round(rect.height)
+      };
+    }
+  }, function (a, clip) {
+    if (!clip) {
+      throw new Error('invalid selector "' + selector + '"');
+    }
+    self.child.once('screenshot', function (img) {
+      var buf = new Buffer(img.data);
+      debug('.screenshotSelector() captured with length %s', buf.length);
+      path ? fs.writeFile(path, buf, done) : done(null, buf);
+    });
+    self.child.emit('screenshot', path, clip);
+  }, selector);
+})
+
+// run
+yield Nightmare()
+  .goto('http://google.com')
+  .screenshotSelector('google.png', 'title')
+	    /*Nightmare.action('screenshotSelector', function (path, selector, start, end, done) {
 	    	debug('.screenshotSelector()');
 		if (arguments.length > 3) done = start;
 		console.log("testtt");
@@ -78,11 +115,11 @@ module.exports =  {
 		    });
 		    self.child.emit('screenshot', path, clip);
 		}, selector);
-		});
+		});*/
 		
 		var date = new Date().toISOString().slice(0,10);
 		console.log("3");
-		vo(function* () {
+		/*vo(function* () {
 			console.log("4");
 			var nightmare = Nightmare({ show: true });
 			var run = yield nightmare.goto('http://dining.iastate.edu/menus/' + location + '/' + date)
@@ -94,7 +131,7 @@ module.exports =  {
 		})(function (err, result) {
 		  	if (err) return console.log(err + "------");
 			console.log(result + "---");
-		});
+		});*/
 	},
   
 	tweet: function() {
