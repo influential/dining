@@ -79,7 +79,9 @@ module.exports =  {
 		});
 		
 		var date = new Date().toISOString().slice(0,10);
+		console.log("3");
 		vo(function* () {
+			console.log("4");
 			var nightmare = Nightmare({ show: true });
 			var run = yield nightmare.goto('http://dining.iastate.edu/menus/' + location + '/' + date)
 			.inject('js', 'node_modules/jquery/dist/jquery.js')
