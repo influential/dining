@@ -26,6 +26,6 @@ module.exports.routes = {
     view: 'homepage'
   },
   
-  '/twitter': 'AuthController.connect'
+  '/twitter': 'AuthController.test'
 
 };
