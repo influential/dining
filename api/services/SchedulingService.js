@@ -133,14 +133,20 @@ module.exports =  {
 		  	if (err) return console.log(err + "------");
 			console.log(result + "---");
 		});*/
-		vo(function* () {
-		yield Nightmare()
+		
+		vo(run)(function(err, result) {
+		  if (err) throw err;
+		});
+
+		function *run() {
+		var nightmare = Nightmare();
+		yield nightmare
   		.goto('http://google.com')
   		.screenshotSelector('google.png', 'title')
-		})(function (err) {
-		  	if (err) return console.log(err + "------");
-			console.log("---");
-		});
+  		console.log(title);
+  		yield nightmare.end();
+}
+
 		
 	},
   
