@@ -1,6 +1,7 @@
 var twitterAPI = require('node-twitter-api');
 var async = require('async');
 var Nightmare = require('nightmare');
+var vo = require('vo');
 
 module.exports =  {
   
