@@ -76,12 +76,18 @@ module.exports =  {
 		}, selector);
 		});
 		
-		var nightmare = Nightmare({ show: true });
 		var date = new Date().toISOString().slice(0,10);
-		var run = yield nightmare.goto('http://dining.iastate.edu/menus/' + location + '/' + date)
-		.inject('js', 'node_modules/jquery/dist/jquery.js')
-	  	.screenshotSelector('../../.tmp/public/' + location + '.png', 'selector', 0, 5);
-	  	yield nightmare.end();
+		vo(function* () {
+			var nightmare = Nightmare({ show: true });
+			var run = yield nightmare.goto('http://dining.iastate.edu/menus/' + location + '/' + date)
+			.inject('js', 'node_modules/jquery/dist/jquery.js')
+		  	.screenshotSelector('../../.tmp/public/' + location + '.png', 'selector', 0, 5);
+		  	yield nightmare.end();
+		  	return run;
+		})(function (err, result) {
+		  	if (err) return console.log(err);
+			console.log(result);
+		});
 	},
   
 	tweet: function() {
