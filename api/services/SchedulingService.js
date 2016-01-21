@@ -145,9 +145,11 @@ module.exports =  {
   		.screenshotSelector('google.png', 'title')
   		console.log(title);
   		yield nightmare.end();*/
-  		
+  		console.log("3");
   		vo(function* () {
+  			console.log("4");
 		  var nightmare = Nightmare({ show: true });
+		  console.log("5");
 		  var link = yield nightmare
 		    .goto('http://yahoo.com')
 		    .type('input[title="Search"]', 'github nightmare')
@@ -156,11 +158,13 @@ module.exports =  {
 		    .evaluate(function () {
 		      return document.getElementsByClassName('ac-21th')[0].href;
 		    });
+		    console.log("6");
 		  yield nightmare.end();
+		  console.log("7");
 		  return link;
 		})(function (err, result) {
 		  if (err) return console.log(err);
-		  console.log(result);
+		  console.log("8");
 		});
 
 
