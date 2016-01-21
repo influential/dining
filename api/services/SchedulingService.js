@@ -38,6 +38,7 @@ module.exports =  {
   
 	snapshot: function(location, selector) {
   	    
+  	    console.log("2");
 	    Nightmare.action('screenshotSelector', function (path, selector, start, end, done) {
 	    	debug('.screenshotSelector()');
 		if (arguments.length > 3) done = start;
