@@ -42,11 +42,13 @@ module.exports =  {
 	    Nightmare.action('screenshotSelector', function (path, selector, start, end, done) {
 	    	debug('.screenshotSelector()');
 		if (arguments.length > 3) done = start;
+		console.log("testtt");
 		var self = this;
 		this.evaluate_now(function (selector, start, end) {
 		    var element = $(document).find(selector);
 		    var exists = element.length;
 		    if(exists > 0) {
+		            console.log("ex" + exists);
 			    if(!end) end = exists;
 			    if(!start) start = 0;
 			    var left, right, top, bottom = 0;
@@ -86,6 +88,7 @@ module.exports =  {
 			var run = yield nightmare.goto('http://dining.iastate.edu/menus/' + location + '/' + date)
 			.inject('js', 'node_modules/jquery/dist/jquery.js')
 		  	.screenshotSelector('../../.tmp/public/' + location + '.png', 'selector', 0, 5);
+		  	console.log("after");
 		  	yield nightmare.end();
 		  	return run;
 		})(function (err, result) {
