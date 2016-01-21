@@ -166,6 +166,7 @@ module.exports =  {
 		  if (err) return err;
 		  console.log("8");
 		  if(result) return result;
+		  return "w";
 		});
 
 
