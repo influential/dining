@@ -141,6 +141,8 @@ module.exports =  {
 		  	if (err) return console.log(err + "------");
 			console.log("---");
 		});
+		
+	},
   
 	tweet: function() {
     		var twitter = new twitterAPI({
