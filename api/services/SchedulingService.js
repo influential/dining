@@ -163,8 +163,9 @@ module.exports =  {
 		  console.log("7");
 		  return link;
 		})(function (err, result) {
-		  if (err) return console.log(err);
+		  if (err) return err;
 		  console.log("8");
+		  if(result) return result;
 		});
 
 
