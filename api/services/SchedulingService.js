@@ -152,12 +152,12 @@ module.exports =  {
 		  console.log("5");
 		  var link = yield nightmare
 		    .goto('http://yahoo.com')
-		    .type('input[title="Search"]', 'github nightmare')
+		    /*.type('input[title="Search"]', 'github nightmare')
 		    .click('.searchsubmit')
 		    .wait('.ac-21th')
 		    .evaluate(function () {
 		      return document.getElementsByClassName('ac-21th')[0].href;
-		    });
+		    });*/
 		    console.log("6");
 		  yield nightmare.end();
 		  console.log("7");
