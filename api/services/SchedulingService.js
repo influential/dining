@@ -75,11 +75,12 @@ module.exports =  {
 		}, selector);
 		});
 		
+		var night = nightmare({ show: true });
 		var date = new Date().toISOString().slice(0,10);
-		var run = yield nightmare().goto('http://dining.iastate.edu/menus/' + location + '/' + date)
+		var run = yield night().goto('http://dining.iastate.edu/menus/' + location + '/' + date)
 		.inject('js', 'node_modules/jquery/dist/jquery.js')
 	  	.screenshotSelector('../../.tmp/public/' + location + '.png', 'selector', 0, 5);
-	  	//yield nightmare.end();
+	  	yield night.end();
 	},
   
 	tweet: function() {
