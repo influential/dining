@@ -58,6 +58,7 @@ module.exports = {
 		  if (err) return console.log(err);
 		  console.log(result);
 		});
+		console.log("3");
 		//var y = SchedulingService.snapshot('seasons', '.active-trail');
 		//console.log("y" + y);
 	}
