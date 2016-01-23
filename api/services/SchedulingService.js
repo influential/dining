@@ -39,7 +39,7 @@ module.exports =  {
 	snapshot: function(location, selector) {
   	    
   	    console.log("2");
-  	    Nightmare.action('screenshotSelector', function (path, selector, done) {
+  	    /*Nightmare.action('screenshotSelector', function (path, selector, done) {
   debug('.screenshotSelector()');
   if (typeof selector === 'function') {
     done = selector;
@@ -70,7 +70,7 @@ module.exports =  {
     });
     self.child.emit('screenshot', path, clip);
   }, selector);
-});
+});*/
 
 // run
 
