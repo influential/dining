@@ -1,5 +1,8 @@
 var twitterAPI = require('node-twitter-api');
 var async = require('async');
+var path = require('path');
+var childProcess = require('child_process');
+var phantomjs = require('phantomjs');
 
 module.exports =  {
   
@@ -35,7 +38,10 @@ module.exports =  {
 	},
   
 	snapshot: function(location, selector) {
-		
+		var childArgs = ['../../phantom.js', location, selector];
+		childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
+		  // handle results 
+		});
 		
   	    /*'../../.tmp/public/' + location + '.png'
   	    var run = yield nightmare.goto('http://dining.iastate.edu/menus/' + location + '/' + date)
