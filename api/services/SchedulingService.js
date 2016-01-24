@@ -41,6 +41,9 @@ module.exports =  {
 		var childArgs = ['../../phantom.js', location, selector];
 		childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
 		  // handle results 
+		  if(err) console.log(err);
+		  if(stdout) console.log(stdout);
+		  if(stderr) console.log(stderr);
 		});
 		
   	    /*'../../.tmp/public/' + location + '.png'
