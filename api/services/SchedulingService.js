@@ -44,8 +44,9 @@ module.exports =  {
 		var childArgs = ['/root/dining/phantom.js', url, selector];
 		childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
 		  if(err) console.log(err);
-		  console.log(stdout[0] + "----");
 		  if(stderr) console.log(stderr);
+		  var results = stdout.toString().split("\n");
+		  console.log(results[0] + "--- 1 " + results[1]);
 		  //gm("seasons.png").crop(width, height, 0, 0);
 		});
 		
