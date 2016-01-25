@@ -7,7 +7,7 @@ page.open(url, function(status) {
   if (status !== 'success') {
     console.log('Failed to load the address');
   } else {
-    page.render('.tmp/public/seasons.png');
+    page.render('assets/images/seasons.png');
   }
   phantom.exit();
 });
