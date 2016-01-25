@@ -38,9 +38,10 @@ module.exports =  {
 	},
   
 	snapshot: function(location, selector) {
-		var childArgs = ['/root/dining/phantom.js', 'http://google.com', selector];
+		var date = new Date().toISOString().slice(0,10);
+		var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
+		var childArgs = ['/root/dining/phantom.js', url, selector];
 		childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
-		  // handle results 
 		  if(err) console.log(err);
 		  if(stdout) console.log(stdout);
 		  if(stderr) console.log(stderr);
