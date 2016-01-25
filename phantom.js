@@ -13,7 +13,7 @@ page.open(url, function(status) {
   });
   console.log(top);
   var bottom = page.evaluate(function() {
-    return document.querySelectorAll(".event-header")[1].getBoundingClientRect().bottom;
+    return document.querySelectorAll(".event-header")[2].getBoundingClientRect().top;
   });
   console.log(bottom);
   }
