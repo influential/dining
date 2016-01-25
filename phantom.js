@@ -9,11 +9,11 @@ page.open(url, function(status) {
   } else {
     page.render('assets/images/seasons.png');
   var top = page.evaluate(function() {
-    return .querySelectorAll(".event-header")[1].getBoundingClientRect().top;
+    return document.querySelectorAll(".event-header")[1].getBoundingClientRect().top;
   });
   console.log(top);
   var bottom = page.evaluate(function() {
-    return .querySelectorAll(".event-header")[1].getBoundingClientRect().bottom;
+    return document.querySelectorAll(".event-header")[1].getBoundingClientRect().bottom;
   });
   console.log(bottom);
   }
