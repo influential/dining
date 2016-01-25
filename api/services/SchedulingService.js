@@ -3,6 +3,7 @@ var async = require('async');
 var path = require('path');
 var childProcess = require('child_process');
 var phantomjs = require('phantomjs');
+var gm = require('gm');
 
 module.exports =  {
   
@@ -43,8 +44,9 @@ module.exports =  {
 		var childArgs = ['/root/dining/phantom.js', url, selector];
 		childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
 		  if(err) console.log(err);
-		  if(stdout) console.log(stdout);
+		  console.log(stdout[0] + "----");
 		  if(stderr) console.log(stderr);
+		  //gm("seasons.png").crop(width, height, 0, 0);
 		});
 		
   	    /*'../../.tmp/public/' + location + '.png'
