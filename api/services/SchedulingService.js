@@ -47,7 +47,7 @@ module.exports =  {
 		  if(stderr) console.log(stderr);
 		  var results = stdout.toString().split("\n");
 		  console.log(results[0] + "--- 1 " + results[1]);
-		  gm("../../assets/images/seasons.png").crop(parseInt(results[0]), parseInt(results[1]), 0, 0);
+		  gm("../../../assets/images/seasons.png").crop(parseInt(results[0]), parseInt(results[1]), 0, 0);
 		});
 		
   	    /*'../../.tmp/public/' + location + '.png'
