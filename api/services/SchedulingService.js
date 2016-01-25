@@ -38,7 +38,7 @@ module.exports =  {
 	},
   
 	snapshot: function(location, selector) {
-		var childArgs = ['../../phantom.js', location, selector];
+		var childArgs = ['../../../../../../phantom.js', location, selector];
 		childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
 		  // handle results 
 		  if(err) console.log(err);
