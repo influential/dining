@@ -8,6 +8,14 @@ page.open(url, function(status) {
     console.log('Failed to load the address');
   } else {
     page.render('assets/images/seasons.png');
+  var top = page.evaluate(function() {
+    return .querySelectorAll(".event-header")[1].getBoundingClientRect().top;
+  });
+  console.log(top);
+  var bottom = page.evaluate(function() {
+    return .querySelectorAll(".event-header")[1].getBoundingClientRect().bottom;
+  });
+  console.log(bottom);
   }
   phantom.exit();
 });
