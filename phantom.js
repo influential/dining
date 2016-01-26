@@ -2,29 +2,33 @@ var page = require('webpage').create();
 var system = require('system');
 var url = system.args[1];
 var meal = system.args[2];
+var location = system.args[3];
 
 page.open(url, function(status) {
-  page.render('public/seasons.png');
-  console.log("ooo" + url);
-  phantom.exit();
-});
-/*
-page.open(url, function() {
-  var top = page.evaluate(function() {
-    return document.querySelectorAll(".event-header")[0].getBoundingClientRect().top;
-  });
-  console.log(top);
-  var bottom;
-  if(meal == 2) {
+  page.render('public/' + location + '.png');
+  var top, bottom;
+  if(meal == 1) {
+    top = page.evaluate(function() {
+      return document.querySelectorAll(".event-header")[0].getBoundingClientRect().top;
+    });
     bottom = page.evaluate(function() {
-      return document.querySelectorAll(".event-header")[meal + 1].getBoundingClientRect().top;
+      return document.querySelectorAll(".event-header")[1].getBoundingClientRect().top;
+    });
+  } else if(meal == 2) {
+    top = page.evaluate(function() {
+      return document.querySelectorAll(".event-header")[1].getBoundingClientRect().top;
+    });
+    bottom = page.evaluate(function() {
+      return document.querySelectorAll(".event-header")[2].getBoundingClientRect().top;
     });
   } else {
+    top = page.evaluate(function() {
+      return document.querySelectorAll(".event-header")[2].getBoundingClientRect().top;
+    });
     bottom = page.evaluate(function() {
-      return document.querySelectorAll(".event-header")[meal + 1].getBoundingClientRect().top;
+      return document.querySelectorAll(".event-header")[3].getBoundingClientRect().top;
     });
   }
-  console.log(bottom);
-  page.render('public/seasons.png');
+  console.log(top + "---" + bottom);
   phantom.exit();
-});*/
+});
