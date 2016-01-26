@@ -51,6 +51,7 @@ function screenshot(location, meal) {
   var date = new Date().toISOString().slice(0,10);
   var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
   var childArgs = ['/root/dining/phantom.js', url, meal];
+  console.log(url + "---" + meal);
   childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
   	if(err) console.log(err);
 	if(stderr) console.log(stderr);
