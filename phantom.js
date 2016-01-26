@@ -8,7 +8,7 @@ page.open(url, function(meal) {
   var top = page.evaluate(function() {
     return document.querySelectorAll(".event-header")[meal].getBoundingClientRect().top;
   });
-  var bottom;
+  /*var bottom;
   if(meal == 2) {
     bottom = page.evaluate(function() {
       //return document.querySelectorAll(".event-header")[meal + 1].getBoundingClientRect().top;
@@ -17,6 +17,6 @@ page.open(url, function(meal) {
     bottom = page.evaluate(function() {
       return document.querySelectorAll(".event-header")[meal + 1].getBoundingClientRect().top;
     });
-  }
+  }*/
   phantom.exit();
 }, meal);
