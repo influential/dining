@@ -70,8 +70,8 @@ function menu(meal) {
   var day = new Date().getDay();
   if(meal == 0) {
     async.parallel([
-      screenshot("udcc", 1),
-	    screenshot("seasons", 1),
+     // screenshot("udcc", 1),
+	   // screenshot("seasons", 1),
 	    screenshot("conversations", 1)
 	   ], function(err, results) {
 	    tweet(meal);
