@@ -10,4 +10,4 @@ app.get('/image', function(req, res) {
   res.send('hello world');
 });
 
-app.listen(8080);
+app.listen(80);
