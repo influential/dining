@@ -1,8 +1,16 @@
 var page = require('webpage').create();
-/*var system = require('system');
+var system = require('system');
 var url = system.args[1];
-var meal = system.args[2];*/
+var meal = system.args[2];
 
+page.open(url, function(status) {
+  console.log("Status: " + status);
+  if(status === "success") {
+    page.render('example.png');
+  }
+  phantom.exit();
+});
+/*
 page.open(url, function() {
   var top = page.evaluate(function() {
     return document.querySelectorAll(".event-header")[0].getBoundingClientRect().top;
@@ -21,4 +29,4 @@ page.open(url, function() {
   console.log(bottom);
   page.render('public/seasons.png');
   phantom.exit();
-});
+});*/
