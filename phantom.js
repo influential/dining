@@ -18,5 +18,7 @@ page.open(url, function(meal) {
       return document.querySelectorAll(".event-header")[meal + 1].getBoundingClientRect().top;
     });
   }*/
+  return top;
+  console.log(top + "--")
   phantom.exit();
 }, meal);
