@@ -5,7 +5,7 @@ var meal = system.args[2];
 
 page.open(url, function(status) {
   page.render('public/seasons.png');
-  console.log("ooo");
+  console.log("ooo" + url);
   phantom.exit();
 });
 /*
