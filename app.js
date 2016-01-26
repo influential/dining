@@ -75,7 +75,8 @@ function menu(meal) {
 	   // screenshot("seasons", 1),
 	    screenshot("conversations", 1)
 	   ], function(err, results) {
-	    tweet(meal);
+	    //tweet();
+	    console.log(results);
 	   });
   } else if(meal == 1) {
     if(day == 0 || day == 6) {
