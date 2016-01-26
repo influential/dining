@@ -85,7 +85,7 @@ function menu(meal) {
       
     }
   } else {
-    if(day == 0 || day == 6) {
+    if(day == 0) {
       
     } else {
       
