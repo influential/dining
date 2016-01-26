@@ -47,9 +47,10 @@ module.exports =  {
 		  if(stderr) console.log(stderr);
 		  var results = stdout.toString().split("\n");
 		  console.log(results[0] + "--- 1 " + results[1]);
-		  gm("../../../assets/images/seasons.png").crop(parseInt(results[0]), parseInt(results[1]), 0, 0).write('../../../assets/images/seasons.png', function (err) {
-  if (!err) console.log('crazytown has arrived');
-});
+		  gm("../../../assets/images/seasons.png").crop(parseInt(results[0]), parseInt(results[1]), 0, 0)
+		  .write('../../../assets/images/seasons.png', function (err) {
+  			if(err) console.log(err);
+		  });
 		});
 		
   	    /*'../../.tmp/public/' + location + '.png'
