@@ -53,9 +53,9 @@ function screenshot(location, meal) {
   var childArgs = ['/root/dining/phantom.js', url, meal];
   console.log(url + "---" + meal);
   childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
-  	if(err) console.log(err);
-	if(stderr) console.log(stderr);
-	if(stdout) console.log(stdout);
+  	if(err) console.log(err.toString());
+	if(stderr) console.log(stderr.toString());
+	if(stdout) console.log(stdout.toString());
 	/*console.log(stdout.toString());
 	var results = stdout.toString().split("\n");
 	console.log(results[0] + "---" + results[1]);*/
