@@ -46,8 +46,8 @@ module.exports =  {
 		  if(err) console.log(err);
 		  if(stderr) console.log(stderr);
 		  var results = stdout.toString().split("\n");
-		  console.log(results[0] + "--- 1 " + results[1]);
-		  gm("/root/dining/assets/images/seasons.png").crop(parseInt(results[0]), parseInt(results[1]), 0, 0)
+		  console.log(results[0] + "---" + results[1]);
+		  gm("/root/dining/assets/images/seasons.png").crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
 		  .write('/root/dining/assets/images/seasons.png', function (err) {
   			if(err) console.log(err);
 		  });
