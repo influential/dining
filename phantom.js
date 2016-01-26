@@ -2,10 +2,10 @@ var page = require('webpage').create();
 var system = require('system');
 var url = system.args[1];
 var meal = system.args[2];
-var location = system.args[3];
+var location = 'public/' + system.args[3] + '.png';
 
 page.open(url, function(status) {
-  page.render('public/' + location + '.png');
+  page.render('public/' + 'conversations' + '.png');
   var top, bottom;
   if(meal == 1) {
     top = page.evaluate(function() {
