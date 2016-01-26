@@ -4,9 +4,9 @@ var url = system.args[1];
 var meal = system.args[2];
 console.log(system.args);
 page.open(url, function(meal) {
-  page.render('seasons.png');
+  //page.render('seasons.png');
   var top = page.evaluate(function() {
-    return document.querySelectorAll(".event-header")[meal].getBoundingClientRect().top;
+    return document.querySelectorAll(".event-header")[0].getBoundingClientRect().top;
   });
   console.log(top);
   /*var bottom;
