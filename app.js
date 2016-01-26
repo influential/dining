@@ -45,6 +45,24 @@ function run() {
   
 }
 
+/* Screenshots/Crops Menu Page */
+
+function screenshot(location, meal) {
+  var date = new Date().toISOString().slice(0,10);
+  var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
+  var childArgs = ['/root/dining/phantom.js', url, meal];
+  childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
+  	if(err) console.log(err);
+	if(stderr) console.log(stderr);
+	var results = stdout.toString().split("\n");
+	console.log(results[0] + "---" + results[1]);
+	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
+	.write('/root/dining/public/' + location + '.png', function (err) {
+		if(err) console.log(err);
+	});
+  });
+}
+
 /* Menu Logic */
 
 function menu(meal) {
@@ -70,24 +88,6 @@ function menu(meal) {
       
     }
   }
-}
-
-/* Screenshots/Crops Menu Page */
-
-function screenshot(location, meal) {
-  var date = new Date().toISOString().slice(0,10);
-  var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
-  var childArgs = ['/root/dining/phantom.js', url, meal];
-  childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
-  	if(err) console.log(err);
-	if(stderr) console.log(stderr);
-	var results = stdout.toString().split("\n");
-	console.log(results[0] + "---" + results[1]);
-	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
-	.write('/root/dining/public/' + location + '.png', function (err) {
-		if(err) console.log(err);
-	});
-  });
 }
 
 /* Tweet Pictures */
