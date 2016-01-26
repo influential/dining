@@ -8,17 +8,17 @@ var phantomjs = require('phantomjs');
 var gm = require('gm');
 var CronJob = require('cron').CronJob;
 var express = require('express');
-var keys = require('./keys');
+var keys = require('./keys.js');
 
 /* Server Launch and Routes*/
 
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
-app.get('/tweet', function(req, res) { res.send('Successful Post') });
+app.get('/tweet', function(req, res) { test();/*res.send('Successful Post')*/ });
 app.get('/auth', function(req, res) { res.send('Successful Authentication') });
 //run();
-test();
+//test();
 
 function test() {
   menu(0);
@@ -73,23 +73,25 @@ function menu(meal) {
 }
 
 /* Screenshots/Crops Menu Page */
+
 function screenshot(location, meal) {
   var date = new Date().toISOString().slice(0,10);
-	var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
-	var childArgs = ['/root/dining/phantom.js', url, meal];
-	childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
-	  if(err) console.log(err);
-	  if(stderr) console.log(stderr);
-	  var results = stdout.toString().split("\n");
-	  console.log(results[0] + "---" + results[1]);
-	  gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
-	  .write('/root/dining/public/' + location + '.png', function (err) {
-			if(err) console.log(err);
-	  });
+  var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
+  var childArgs = ['/root/dining/phantom.js', url, meal];
+  childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
+  	if(err) console.log(err);
+	if(stderr) console.log(stderr);
+	var results = stdout.toString().split("\n");
+	console.log(results[0] + "---" + results[1]);
+	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
+	.write('/root/dining/public/' + location + '.png', function (err) {
+		if(err) console.log(err);
 	});
+  });
 }
 
 /* Tweet Pictures */
+
 function tweet() {
   var twitter = new twitterAPI({
 	    consumerKey: keys.oauth.CK,
