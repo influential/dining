@@ -58,11 +58,11 @@ function screenshot(location, meal) {
 	console.log(stdout.toString());
 	var results = stdout.toString().split("\n");
 	console.log(results[0] + "---" + results[1]);
-	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
+	/*gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
 	.write('/root/dining/public/' + location + '.png', function (err) {
 		if(err) console.log(err);
 		return 1;
-	});
+	});*/
   });
 }
 
