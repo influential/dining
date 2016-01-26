@@ -59,6 +59,7 @@ function screenshot(location, meal) {
 	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
 	.write('/root/dining/public/' + location + '.png', function (err) {
 		if(err) console.log(err);
+		return 1;
 	});
   });
 }
