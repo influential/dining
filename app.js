@@ -15,7 +15,7 @@ var keys = require('./local.js');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
-app.get('/tweet', function(req, res) { test();/*res.send('Successful Post')*/ });
+app.get('/tweet', function(req, res) { screenshot("conversations", 1);/*res.send('Successful Post')*/ });
 app.get('/auth', function(req, res) { res.send('Successful Authentication') });
 //run();
 //test();
