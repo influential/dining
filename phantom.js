@@ -5,7 +5,7 @@ var meal = system.args[2];
 var location = 'public/' + system.args[3] + '.png';
 
 page.open(url, function(status) {
-  page.render('public/' + 'conversations' + '.png');
+  page.render(location);
   var top, bottom;
   if(meal == 1) {
     top = page.evaluate(function() {
