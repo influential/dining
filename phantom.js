@@ -4,10 +4,7 @@ var url = system.args[1];
 var meal = system.args[2];
 
 page.open(url, function(status) {
-  console.log("Status: " + status);
-  if(status === "success") {
-    page.render('example.png');
-  }
+  page.render('public/seasons.png');
   phantom.exit();
 });
 /*
