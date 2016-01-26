@@ -3,7 +3,7 @@ var system = require('system');
 var url = system.args[0];
 var meal = system.args[1];
 
-page.open(url, function(status) {
+page.open(url, function(meal) {
   page.render('public/seasons.png');
   var top = page.evaluate(function() {
     return document.querySelectorAll(".event-header")[meal].getBoundingClientRect().top;
@@ -19,4 +19,4 @@ page.open(url, function(status) {
     });
   }
   phantom.exit();
-});
+}, meal);
