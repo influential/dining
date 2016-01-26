@@ -8,7 +8,7 @@ var phantomjs = require('phantomjs');
 var gm = require('gm');
 var CronJob = require('cron').CronJob;
 var express = require('express');
-var keys = require('./keys.js');
+var keys = require('./local.js');
 
 /* Server Launch and Routes*/
 
