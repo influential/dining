@@ -2,13 +2,13 @@ var page = require('webpage').create();
 var system = require('system');
 var url = system.args[1];
 var meal = system.args[2];
-console.log("args");
+console.log(system.args);
 page.open(url, function(meal) {
-  console.log("test");
   page.render('seasons.png');
   var top = page.evaluate(function() {
     return document.querySelectorAll(".event-header")[meal].getBoundingClientRect().top;
   });
+  console.log(top);
   /*var bottom;
   if(meal == 2) {
     bottom = page.evaluate(function() {
@@ -19,6 +19,5 @@ page.open(url, function(meal) {
       return document.querySelectorAll(".event-header")[meal + 1].getBoundingClientRect().top;
     });
   }*/
-  console.log(top + "--")
   phantom.exit();
 }, meal);
