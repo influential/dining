@@ -48,6 +48,7 @@ function run() {
 /* Screenshots/Crops Menu Page */
 
 function screenshot(location, meal) {
+	console.log(meal);
   var date = new Date().toISOString().slice(0,10);
   var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
   var childArgs = ['/root/dining/phantom.js', url, meal];
