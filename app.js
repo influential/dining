@@ -70,14 +70,14 @@ function screenshot(location, meal) {
 function menu(meal) {
   var day = new Date().getDay();
   if(meal == 0) {
-    async.parallel([
+    //async.parallel([
      // screenshot("udcc", 1),
 	   // screenshot("seasons", 1),
-	    screenshot("conversations", 1)
-	   ], function(err, results) {
+	    screenshot("conversations", 1);
+	  // ], function(err, results) {
 	    //tweet();
-	    console.log(results);
-	   });
+	   //console.log(results);
+	  // });
   } else if(meal == 1) {
     if(day == 0 || day == 6) {
       
