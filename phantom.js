@@ -3,10 +3,11 @@ var system = require('system');
 var url = system.args[1];
 var meal = system.args[2];
 
-page.open(url, function(status) {
+page.open(url, function(meal) {
   page.render('public/seasons.png');
+  console.log(meal);
   phantom.exit();
-});
+}, meal);
 /*
 page.open(url, function() {
   var top = page.evaluate(function() {
