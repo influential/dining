@@ -167,8 +167,7 @@ function tweet(cb) {
 	var actions;
 	async.parallel([
     		function(cb) {
-    			cb(null, twitter.uploadMedia({media: '/root/dining/public/udm.png'}, keys.oauth.AT, keys.oauth.ATS));
-    			
+    			twitter.uploadMedia({media: '/root/dining/public/udm.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
     		}/*,
     		function(cb) {
     			twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS);
