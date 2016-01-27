@@ -168,23 +168,21 @@ function tweet(cb) {
 	async.parallel([
     		function(cb) {
     			return twitter.uploadMedia({media: '/root/dining/public/udm.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
-    		}/*,
-    		function(cb) {
-    			twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS);
-    			cb();
     		},
     		function(cb) {
-    			twitter.uploadMedia({media: '/root/dining/public/conversations.png'}, keys.oauth.AT, keys.oauth.ATS);
-    			cb();
+    			return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
     		},
     		function(cb) {
-    			twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS);
-    			cb();
-    		}*/
+    			return twitter.uploadMedia({media: '/root/dining/public/conversations.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
+    		},
+    		function(cb) {
+    			return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
+    		}
         ], function(err, results) {
     		if(err) console.log(err);
-    		console.log("uploaded" + results[0][0].media_id);
-    		twitter.statuses("update", {media_ids: results}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
+    		var ids = results.map(function(obj) { return obj[0].media_id });
+    		console.log("uploaded" + ids);
+    		twitter.statuses("update", {media_ids: ids}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		        	if (err) console.log(err);
 		        	console.log("tweeted");
 		            	cb();
