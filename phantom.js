@@ -6,18 +6,18 @@ var save = system.args[3];
 
 page.open(url, function(status) {
   if(save == 'seasons') page.render('/root/dining/public/seasons.png');
-  /*if(location == 'conversations') page.render('public/conversations.png');
-  if(location == 'udcc') page.render('public/udcc.png');
-  if(location == 'storms') page.render('public/storms.png');*/
+  if(save == 'conversations') page.render('/root/dining/public/conversations.png');
+  if(save == 'udcc') page.render('/root/dining/public/udcc.png');
+  if(save == 'storms') page.render('/root/dining/public/storms.png');
   var top, bottom;
-  if(meal == 1) {
+  if(meal == 0) {
     top = page.evaluate(function() {
       return document.querySelectorAll(".event-header")[0].getBoundingClientRect().top;
     });
     bottom = page.evaluate(function() {
       return document.querySelectorAll(".event-header")[1].getBoundingClientRect().top;
     });
-  } /*else if(meal == 2) {
+  } else if(meal == 1) {
     top = page.evaluate(function() {
       return document.querySelectorAll(".event-header")[1].getBoundingClientRect().top;
     });
@@ -29,9 +29,10 @@ page.open(url, function(status) {
       return document.querySelectorAll(".event-header")[2].getBoundingClientRect().top;
     });
     bottom = page.evaluate(function() {
-      return document.querySelectorAll(".event-header")[3].getBoundingClientRect().top;
+      var check = document.querySelectorAll(".event-header")[3].getBoundingClientRect().top;
+      return check == undefined ? document.querySelectorAll(".legend")[0].getBoundingClientRect().top : check;
     });
-  }*/
+  }
   console.log(top + "---" + bottom);
   phantom.exit();
 });
