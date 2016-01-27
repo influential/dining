@@ -8,13 +8,11 @@ var phantomjs = require('phantomjs');
 var gm = require('gm');
 var CronJob = require('cron').CronJob;
 var express = require('express');
-var cookieParser = require('cookie-parser');
 var keys = require('./local.js');
 
 /* Server Launch and Routes*/
 
 var app = express();
-app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
 app.get('/tweet', function(req, res) { menu(0);/*res.send('Successful Post')*/ });
@@ -143,8 +141,8 @@ function authenticate(req) {
 		if(error) {
 			console.log('Error getting OAuth request token : ' + error);
 		} else {
-			req.session.RT = requestToken;
-			req.session.RTS = requestTokenSecret;
+			process.env.RT = requestToken;
+			process.env.RTS = requestTokenSecret;
 			var url = "https://twitter.com/oauth/authenticate?oauth_token=" + requestToken;
 			res.redirect(url);
 		}
@@ -152,7 +150,7 @@ function authenticate(req) {
 }
 
 function confirm(res) {
-	twitter.getAccessToken(req.session.RT, req.session.RTS, req.param('oauth_verifier'), function(error, accessToken, accessTokenSecret, results) {
+	twitter.getAccessToken(process.env.RT, process.env.RTS, req.param('oauth_verifier'), function(error, accessToken, accessTokenSecret, results) {
 		if (error) {
 			console.log(error);
 		} else {
