@@ -167,35 +167,31 @@ function tweet(cb) {
 	var actions;
 	async.parallel([
     		function(cb) {
-    			//var b64content = fs.readFileSync('/root/dining/public/udm.png', { encoding: 'base64' });
     			twitter.uploadMedia({media: '/root/dining/public/udm.png'}, keys.oauth.AT, keys.oauth.ATS);
     			cb();
     			
-    		}/*,
-    		function() {
-    			twitter.uploadMedia("/root/dining/public/storms.png", keys.oauth.AT, keys.oauth.ATS);
-    			
     		},
-    		function() {
-    			twitter.uploadMedia("/root/dining/public/conversations.png", keys.oauth.AT, keys.oauth.ATS);
-    			
+    		function(cb) {
+    			twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS);
+    			cb();
     		},
-    		function() {
-    			twitter.uploadMedia("/root/dining/public/storms.png", keys.oauth.AT, keys.oauth.ATS);
-    			
-    		}*/
+    		function(cb) {
+    			twitter.uploadMedia({media: '/root/dining/public/conversations.png'}, keys.oauth.AT, keys.oauth.ATS);
+    			cb();
+    		},
+    		function(cb) {
+    			twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS);
+    			cb();
+    		}
         ], function(err, results) {
-    	if(err) console.log(err);
-    	console.log("uploaded");
-    	twitter.statuses("update", {media_ids: results},
-    		keys.oauth.AT,
-    		keys.oauth.ATS,
-    		function(err, data, response) {
-	        if (error) console.log(err);
-	        console.log("tweeted");
-	            cb();
-	        }
-      	);
+    		if(err) console.log(err);
+    		console.log("uploaded" + results);
+    		twitter.statuses("update", {media_ids: results}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
+		        	if (err) console.log(err);
+		        	console.log("tweeted");
+		            	cb();
+	        	}
+      		);
   	});
 }
 
