@@ -13,9 +13,15 @@ var keys = require('./local.js');
 /* Server Launch and Routes*/
 
 var app = express();
+app.use(express.cookieParser());
+app.use(express.session({secret: 'key'}));
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
 app.get('/tweet', function(req, res) { menu(0);/*res.send('Successful Post')*/ });
+app.get('/twitter', function(req, res) { 
+	if(req.param('oauth_verifier')) confirm(req);
+	else authenticate(res);
+});
 app.get('/auth', function(req, res) { res.send('Successful Authentication') });
 
 //run();
@@ -125,4 +131,73 @@ function tweet() {
 	        	}
       		);
   	});
+}
+
+function authenticate(res) {
+	var twitter = new twitterAPI({
+	    consumerKey: keys.oauth.CK,
+	    consumerSecret: keys.oauth.CKS,
+	    callback: 'http://104.131.2.65/twitter'
+	});
+	twitter.getRequestToken(function(error, requestToken, requestTokenSecret, results) {
+		if(error) {
+			console.log('Error getting OAuth request token : ' + error);
+		} else {
+			req.session.RT = requestToken;
+			req.session.RTS = requestTokenSecret;
+			var url = "https://twitter.com/oauth/authenticate?oauth_token=" + requestToken;
+			res.redirect(url);
+		}
+	});
+}
+
+function confirm() {
+	twitter.getAccessToken(req.session.RT, req.session.RTS, req.param('oauth_verifier'), function(error, accessToken, accessTokenSecret, results) {
+		if (error) {
+			console.log(error);
+		} else {
+			return res.send("AccessToken: " + accessToken + "\nAccessTokenSecret: " + accessTokenSecret);
+		}
+	});
+}
+
+var twitterAPI = require('node-twitter-api');
+
+module.exports = {
+	
+	connect: function(req, res) {
+		
+	var twitter = new twitterAPI({
+	    consumerKey: sails.config.oauth.CK,
+	    consumerSecret: sails.config.oauth.CKS,
+	    callback: 'http://104.131.2.65/twitter'
+	});
+	if(req.param('oauth_verifier')) {
+		twitter.getAccessToken(process.env.RT, process.env.RTS, req.param('oauth_verifier'), function(error, accessToken, accessTokenSecret, results) {
+			if (error) {
+				console.log(error);
+			} else {
+				return res.send("AccessToken: " + accessToken + "\nAccessTokenSecret: " + accessTokenSecret);
+			}
+		});
+	} else {
+		twitter.getRequestToken(function(error, requestToken, requestTokenSecret, results) {
+			if(error) {
+				console.log('Error getting OAuth request token : ' + error);
+			} else {
+				req.session.RT = requestToken;
+				req.session.RTS = requestTokenSecret;
+				var url = "https://twitter.com/oauth/authenticate?oauth_token=" + requestToken;
+				res.redirect(url);
+			}
+		});
+	}
+	
+	},
+	
+	test: function(req, res) {
+		SchedulingService.snapshot('seasons', '.active-trail');
+	}
+	
+};
 }
