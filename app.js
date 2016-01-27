@@ -133,7 +133,7 @@ function tweet() {
   	});
 }
 
-function authenticate(res) {
+function authenticate(req) {
 	var twitter = new twitterAPI({
 	    consumerKey: keys.oauth.CK,
 	    consumerSecret: keys.oauth.CKS,
@@ -151,7 +151,7 @@ function authenticate(res) {
 	});
 }
 
-function confirm() {
+function confirm(res) {
 	twitter.getAccessToken(req.session.RT, req.session.RTS, req.param('oauth_verifier'), function(error, accessToken, accessTokenSecret, results) {
 		if (error) {
 			console.log(error);
