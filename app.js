@@ -50,13 +50,13 @@ function screenshot(location, meal, cb) {
     var childArgs = ['/root/dining/phantom.js', url, meal, location];
     childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
         var results = stdout.toString().split("---");
-        gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
+        /*gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
         .write('/root/dining/public/' + location + '.png', function (err) { 
             if(err) console.log(err);
             cb();
-        });
+        });*/
+        cb();
     });
-    return 1;
 }
 
 /* Menu Logic */
