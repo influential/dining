@@ -23,11 +23,6 @@ app.get('/twitter', function(req, res) {
 app.get('/auth', function(req, res) { res.send('Successful Authentication') });
 
 //run();
-//test();
-
-function test() {
-  menu(0);
-}
 
 /* Cron Jobs */
 
@@ -150,7 +145,7 @@ function authenticate(res) {
 }
 
 function confirm(req) {
-	twitter.getAccessToken(process.env.RT, process.env.RTS, req.param('oauth_verifier'), function(error, accessToken, accessTokenSecret, results) {
+	twitter.getAccessToken(process.env.RT, process.env.RTS, req.params.oauth_verifier, function(error, accessToken, accessTokenSecret, results) {
 		if (error) {
 			console.log(error);
 		} else {
