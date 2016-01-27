@@ -17,7 +17,7 @@ app.use(express.static(__dirname + '/public'));
 app.listen(3000);
 app.get('/tweet', function(req, res) { menu(0);/*res.send('Successful Post')*/ });
 app.get('/twitter', function(req, res) { 
-	if(req.param('oauth_verifier')) confirm(req);
+	if(req.params.oauth_verifier) confirm(req);
 	else authenticate(res);
 });
 app.get('/auth', function(req, res) { res.send('Successful Authentication') });
