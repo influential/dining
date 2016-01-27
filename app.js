@@ -68,7 +68,7 @@ function menu(meal) {
     async.parallel([
         screenshot("udcc", 0),
     	screenshot("seasons", 0),
-    	screenshot("conversations", 0);
+    	screenshot("conversations", 0)
 	], function(err, results) {
 	    //tweet();
 	   console.log(results);
