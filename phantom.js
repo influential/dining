@@ -29,8 +29,9 @@ page.open(url, function(status) {
       return document.querySelectorAll(".event-header")[2].getBoundingClientRect().top;
     });
     bottom = page.evaluate(function() {
-      var check = document.querySelectorAll(".event-header")[3].getBoundingClientRect().top;
-      return check == undefined ? document.querySelectorAll(".legend")[0].getBoundingClientRect().top : check;
+      var check = document.querySelectorAll(".event-header").length;
+      if(check > 3) return document.querySelectorAll(".event-header")[3].getBoundingClientRect().top;
+      else return document.querySelectorAll(".legend")[0].getBoundingClientRect().top;
     });
   }
   console.log(top + "---" + bottom);
