@@ -3,12 +3,13 @@ var system = require('system');
 var url = system.args[1];
 var meal = system.args[2];
 var location = system.args[3];
-console.log(location);
+
 page.open(url, function(status) {
-  if(location == 'seasons') page.render('public/seasons.png');
+  /*if(location == 'seasons') page.render('public/seasons.png');
   if(location == 'conversations') page.render('public/conversations.png');
   if(location == 'udcc') page.render('public/udcc.png');
-  if(location == 'storms') page.render('public/storms.png');
+  if(location == 'storms') page.render('public/storms.png');*/
+  console.log(meal + location);
   var top, bottom;
   if(meal == 1) {
     top = page.evaluate(function() {
