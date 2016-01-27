@@ -63,28 +63,28 @@ function screenshot(location, meal, cb) {
 function join() {
 	async.parallel([
             function(cb) { 
-            	gm('/root/dining/public/seasons.png').append('/root/dining/public/seasons-title.png')
+            	gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png')
             	.write('/root/dining/public/seasons.png', function (err) { 
             		if(err) console.log(err);
             		cb();
         	});
             },
             function(cb) { 
-        	gm('/root/dining/public/conversations.png').append('/root/dining/public/conversations-title.png')
+        	gm('/root/dining/public/conversations-title.png').append('/root/dining/public/conversations.png')
             	.write('/root/dining/public/conversations.png', function (err) { 
             		if(err) console.log(err);
             		cb();
         	});
             },
             function(cb) { 
-            	gm('/root/dining/public/udm.png').append('/root/dining/public/udm-title.png')
+            	gm('/root/dining/public/udm-title.png').append('/root/dining/public/udm.png')
             	.write('/root/dining/public/udm.png', function (err) { 
             		if(err) console.log(err);
             		cb();
         	});
             },
             function(cb) { 
-            	gm('/root/dining/public/storms.png').append('/root/dining/public/storms-title.png')
+            	gm('/root/dining/public/storms-title.png').append('/root/dining/public/storms.png')
             	.write('/root/dining/public/storms.png', function (err) { 
             		if(err) console.log(err);
             		cb();
