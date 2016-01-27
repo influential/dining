@@ -98,7 +98,7 @@ function tweet() {
   var twitter = new twitterAPI({
 	    consumerKey: keys.oauth.CK,
 	    consumerSecret: keys.oauth.CKS,
-	    callback: 'http://104.131.2.65/tweet'
+	    callback: 'http://104.131.2.65:3000/tweet'
 	});
 	var actions = [
 		twitter.uploadMedia("/root/dining/public/udm.png", keys.oauth.AT, keys.oauth.ATS),
@@ -130,7 +130,7 @@ function authenticate(res) {
 	var twitter = new twitterAPI({
 	    consumerKey: keys.oauth.CK,
 	    consumerSecret: keys.oauth.CKS,
-	    callback: 'http://104.131.2.65/twitter'
+	    callback: 'http://104.131.2.65:3000/twitter'
 	});
 	twitter.getRequestToken(function(error, requestToken, requestTokenSecret, results) {
 		if(error) {
