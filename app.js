@@ -148,7 +148,7 @@ function confirm(req) {
 		if (error) {
 			console.log(error);
 		} else {
-			return res.send("AccessToken: " + accessToken + "\nAccessTokenSecret: " + accessTokenSecret);
+			console.log("AccessToken: " + accessToken + "\nAccessTokenSecret: " + accessTokenSecret);
 		}
 	});
 }
