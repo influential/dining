@@ -15,7 +15,7 @@ var keys = require('./local.js');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
-app.get('/tweet', function(req, res) { menu(0) /* res.send(200) */ });
+app.get('/tweet', function(req, res) { menu(1) /* res.send(200) */ });
 app.get('/twitter', function(req, res) { authenticate() });
 app.get('/auth', function(req, res) { confirm(req) });
 
@@ -166,28 +166,18 @@ function tweet(cb) {
     var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
 	var actions;
 	async.parallel([
-    		function(cb) {
-    			return twitter.uploadMedia({media: '/root/dining/public/udm.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
-    		},
-    		function(cb) {
-    			return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
-    		},
-    		function(cb) {
-    			return twitter.uploadMedia({media: '/root/dining/public/conversations.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
-    		},
-    		function(cb) {
-    			return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
-    		}
+    		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/udm.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
+    		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
+    		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/conversations.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
+    		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb) }
         ], function(err, results) {
-    		if(err) console.log(err);
     		var ids = results.map(function(obj) { return obj[0].media_id });
-    		console.log("uploaded" + ids);
+    		console.log(ids);
     		twitter.statuses("update", {media_ids: ids}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		        	if (err) console.log(err);
 		        	console.log("tweeted");
-		            	cb();
-	        	}
-      		);
+		            cb();
+	        });
   	});
 }
 
