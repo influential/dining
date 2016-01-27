@@ -60,45 +60,30 @@ function screenshot(location, meal, cb) {
 
 /* Adjoin Screenshots */
 
-function join() {
+function join(cb) {
 	async.parallel([
-            function(cb) { 
-            	gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png')
-            	.write('/root/dining/public/seasons.png', function (err) { 
-            		if(err) console.log(err);
-            		cb();
-        	});
+            function(cb) { joiner("seasons", cb) });
             },
-            function(cb) { 
-        	gm('/root/dining/public/conversations-title.png').append('/root/dining/public/conversations.png')
-            	.write('/root/dining/public/conversations.png', function (err) { 
-            		if(err) console.log(err);
-            		cb();
-        	});
+            function(cb) { joiner("conversations", cb) });
             },
-            function(cb) { 
-            	gm('/root/dining/public/udm-title.png').append('/root/dining/public/udm.png')
-            	.write('/root/dining/public/udm.png', function (err) { 
-            		if(err) console.log(err);
-            		cb();
-        	});
+            function(cb) { joiner("storms", cb) });
             },
-            function(cb) { 
-            	gm('/root/dining/public/storms-title.png').append('/root/dining/public/storms.png')
-            	.write('/root/dining/public/storms.png', function (err) { 
-            		if(err) console.log(err);
-            		cb();
-        	});
+            function(cb) { joiner("udm", cb) });
             }
         ], function(err, results) {
            console.log("append");
+           cb();
         });
 }
 
 /* Join Helper */
 
 function joiner(location, cb) {
-	
+	gm('/root/dining/public/' + location + '-title.png').append('/root/dining/public/' + location + '.png')
+    .write('/root/dining/public/' + location + '.png', function (err) { 
+		if(err) console.log(err);
+		cb();
+	});
 }
 
 /* Menu Logic */
@@ -111,9 +96,13 @@ function menu(meal) {
         	function(cb) { screenshot("seasons", 0, cb) },
         	function(cb) { screenshot("conversations", 0, cb) }
         ], function(err, results) {
-            //tweet();
-            join();
-           console.log("done");
+        	console.log("screenshots")
+        	async.series([
+			    function(cb){ join(cb) },
+			    function(cb){ cb() }
+			], function(err, results){
+			    console.log("all done");
+			});
         });
     } else if(meal == 1) {
     	if(day == 0 || day == 6) {
