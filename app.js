@@ -16,7 +16,7 @@ var app = express();
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
 app.get('/tweet', function(req, res) { menu(0);/*res.send('Successful Post')*/ });
-app.get('/twitter', function(req, res) { 
+app.get('/twitter', function(req, res) {
 	authenticate(res);
 });
 app.get('/auth', function(req, res) { 
@@ -146,6 +146,11 @@ function authenticate(res) {
 }
 
 function confirm(req) {
+	var twitter = new twitterAPI({
+	    consumerKey: keys.oauth.CK,
+	    consumerSecret: keys.oauth.CKS,
+	    callback: 'http://104.131.2.65:3000/auth'
+	});
 	twitter.getAccessToken(process.env.RT, process.env.RTS, req.params.oauth_verifier, function(error, accessToken, accessTokenSecret, results) {
 		if (error) {
 			console.log(error);
