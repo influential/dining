@@ -169,7 +169,7 @@ function tweet(cb) {
     		function() {
     			twitter.uploadMedia("/public/udm.png", keys.oauth.AT, keys.oauth.ATS);
     			
-    		},
+    		}/*,
     		function() {
     			twitter.uploadMedia("/root/dining/public/storms.png", keys.oauth.AT, keys.oauth.ATS);
     			
@@ -181,7 +181,7 @@ function tweet(cb) {
     		function() {
     			twitter.uploadMedia("/root/dining/public/storms.png", keys.oauth.AT, keys.oauth.ATS);
     			
-    		}
+    		}*/
         ], function(err, results) {
     	if(err) console.log(err);
     	console.log("uploaded");
