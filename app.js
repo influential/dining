@@ -15,7 +15,7 @@ var keys = require('./local.js');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
-app.get('/tweet', function(req, res) { screenshot("conversations", 1);/*res.send('Successful Post')*/ });
+app.get('/tweet', function(req, res) { menu(0);/*res.send('Successful Post')*/ });
 app.get('/auth', function(req, res) { res.send('Successful Authentication') });
 //run();
 //test();
@@ -56,9 +56,7 @@ function screenshot(location, meal) {
 	if(stderr) console.log(stderr.toString());
 	var results = stdout.toString().split("---");
 	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
-	.write('/root/dining/public/' + location + '.png', function (err) {
-		if(err) console.log(err);
-	});
+	.write('/root/dining/public/' + location + '.png', function (err) { if(err) console.log(err) });
   });
 }
 
@@ -67,14 +65,14 @@ function screenshot(location, meal) {
 function menu(meal) {
   var day = new Date().getDay();
   if(meal == 0) {
-    //async.parallel([
-     // screenshot("udcc", 1),
-	   // screenshot("seasons", 1),
-	    screenshot("conversations", 1);
-	  // ], function(err, results) {
+    async.parallel([
+        screenshot("udcc", 0),
+    	screenshot("seasons", 0),
+    	screenshot("conversations", 0);
+	], function(err, results) {
 	    //tweet();
-	   //console.log(results);
-	  // });
+	   console.log(results);
+	   });
   } else if(meal == 1) {
     if(day == 0 || day == 6) {
       
