@@ -33,6 +33,5 @@ page.open(url, function(status) {
       return check == undefined ? document.querySelectorAll(".legend")[0].getBoundingClientRect().top : check;
     });
   }
-  console.log(top + "---" + bottom);
   phantom.exit();
 });
