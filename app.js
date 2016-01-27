@@ -143,8 +143,8 @@ function authenticate(res) {
 
 function confirm(req) {
 	var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/auth' });
-	console.log(req.params);
-	twitter.getAccessToken(process.env.RT, process.env.RTS, req.params.oauth_verifier, function(error, accessToken, accessTokenSecret, results) {
+	console.log(req.query.oauth_verifier);
+	twitter.getAccessToken(process.env.RT, process.env.RTS, req.query.oauth_verifier, function(error, accessToken, accessTokenSecret, results) {
 		if (error) {
 			console.log(error);
 		} else {
