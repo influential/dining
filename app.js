@@ -63,20 +63,31 @@ function screenshot(location, meal, cb) {
 function join() {
 	async.parallel([
             function(cb) { 
-            	gm('/root/dining/public/seasons.png').append('/root/dining/public/seasons-title.png'); 
-            	cb(); 
+            	gm('/root/dining/public/seasons.png').append('/root/dining/public/seasons-title.png')
+            	.write('/root/dining/public/seasons.png', function (err) { 
+            		if(err) console.log(err);
+            		cb();
+        	});
             },
-        	function(cb) { 
-            	gm('/root/dining/public/conversations.png').append('/root/dining/public/conversations-title.png')
-            	cb(); 
+        	gm('/root/dining/public/conversations.png').append('/root/dining/public/conversations-title.png')
+            	.write('/root/dining/public/conversations.png', function (err) { 
+            		if(err) console.log(err);
+            		cb();
+        	});
             },
             function(cb) { 
-            	gm('/root/dining/public/udm.png').append('/root/dining/public/udm-title.png'); 
-            	cb(); 
+            	gm('/root/dining/public/udm.png').append('/root/dining/public/udm-title.png')
+            	.write('/root/dining/public/udm.png', function (err) { 
+            		if(err) console.log(err);
+            		cb();
+        	});
             },
             function(cb) { 
-            	gm('/root/dining/public/storms.png').append('/root/dining/public/storms-title.png'); 
-            	cb(); 
+            	gm('/root/dining/public/storms.png').append('/root/dining/public/storms-title.png')
+            	.write('/root/dining/public/storms.png', function (err) { 
+            		if(err) console.log(err);
+            		cb();
+        	});
             }
         ], function(err, results) {
            console.log("append");
