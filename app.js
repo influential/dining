@@ -15,7 +15,7 @@ var keys = require('./local.js');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
-app.get('/tweet', function(req, res) { menu(0);/*res.send('Successful Post')*/ });
+app.get('/tweet', function(req, res) { menu(1) });
 app.get('/twitter', function(req, res) { authenticate() });
 app.get('/auth', function(req, res) { confirm(req) });
 
@@ -49,8 +49,6 @@ function screenshot(location, meal, cb) {
   var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
   var childArgs = ['/root/dining/phantom.js', url, meal, location];
   childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
-  	if(err) console.log(err.toString());
-	if(stderr) console.log(stderr.toString());
 	var results = stdout.toString().split("---");
 	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
 	.write('/root/dining/public/' + location + '.png', function (err) { 
@@ -58,7 +56,6 @@ function screenshot(location, meal, cb) {
 		cb();
 	});
   });
-  return 1;
 }
 
 /* Menu Logic */
@@ -75,11 +72,16 @@ function menu(meal) {
 	   console.log("done");
 	   });
   } else if(meal == 1) {
-    if(day == 0 || day == 6) {
-      
-    } else {
-      
-    }
+  	var options = [
+        	function(cb) { screenshot("udm", 1, cb) },
+    		function(cb) { screenshot("seasons", 1, cb) },
+    		function(cb) { screenshot("conversations", 1, cb) }
+    	];
+    	if(day == 0 || day == 6) options = options.slice(0, 2);
+    async.parallel([options], function(err, results) {
+	    //tweet();
+	   console.log("done");
+	 });
   } else {
     if(day == 0) {
       
