@@ -43,7 +43,7 @@ function run() {
 
 /* Screenshots/Crops Menu Page */
 
-function screenshot(location, meal) {
+function screenshot(location, meal, cb) {
   var date = new Date().toISOString().slice(0,10);
   var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
   var childArgs = ['/root/dining/phantom.js', url, meal, location];
@@ -52,7 +52,10 @@ function screenshot(location, meal) {
 	if(stderr) console.log(stderr.toString());
 	var results = stdout.toString().split("---");
 	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
-	.write('/root/dining/public/' + location + '.png', function (err) { if(err) console.log(err) });
+	.write('/root/dining/public/' + location + '.png', function (err) { 
+		if(err) console.log(err);
+		cb();
+	});
   });
   return 1;
 }
@@ -65,7 +68,9 @@ function menu(meal) {
     async.parallel([
         //screenshot("udcc", 0),
     	//screenshot("seasons", 0),
-    	screenshot("conversations", 0)
+    	function(cb) {
+    	screenshot("conversations", 0, cb);	
+    		}
 	], function(err, results) {
 	    //tweet();
 	   console.log(results);
