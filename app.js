@@ -8,13 +8,13 @@ var phantomjs = require('phantomjs');
 var gm = require('gm');
 var CronJob = require('cron').CronJob;
 var express = require('express');
+var cookieParser = require('cookie-parser');
 var keys = require('./local.js');
 
 /* Server Launch and Routes*/
 
 var app = express();
-app.use(express.cookieParser());
-app.use(express.session({secret: 'key'}));
+app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
 app.get('/tweet', function(req, res) { menu(0);/*res.send('Successful Post')*/ });
