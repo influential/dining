@@ -26,7 +26,9 @@ page.open(url, function(status) {
     });
   } else {
     top = page.evaluate(function() {
-      return document.querySelectorAll(".event-header")[2].getBoundingClientRect().top;
+      var check = document.querySelectorAll(".event-header").length;
+      if(check == 1) return document.querySelectorAll(".event-header")[0].getBoundingClientRect().top;
+      else return document.querySelectorAll(".event-header")[2].getBoundingClientRect().top;
     });
     bottom = page.evaluate(function() {
       var check = document.querySelectorAll(".event-header").length;
