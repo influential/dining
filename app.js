@@ -128,11 +128,7 @@ function tweet() {
 }
 
 function authenticate(res) {
-	var twitter = new twitterAPI({
-	    consumerKey: keys.oauth.CK,
-	    consumerSecret: keys.oauth.CKS,
-	    callback: 'http://104.131.2.65:3000/auth'
-	});
+	var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/auth' });
 	twitter.getRequestToken(function(error, requestToken, requestTokenSecret, results) {
 		if(error) {
 			console.log('Error getting OAuth request token : ' + error);
@@ -146,11 +142,8 @@ function authenticate(res) {
 }
 
 function confirm(req) {
-	var twitter = new twitterAPI({
-	    consumerKey: keys.oauth.CK,
-	    consumerSecret: keys.oauth.CKS,
-	    callback: 'http://104.131.2.65:3000/auth'
-	});
+	var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/auth' });
+	console.log(req.params);
 	twitter.getAccessToken(process.env.RT, process.env.RTS, req.params.oauth_verifier, function(error, accessToken, accessTokenSecret, results) {
 		if (error) {
 			console.log(error);
