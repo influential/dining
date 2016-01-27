@@ -56,6 +56,7 @@ function screenshot(location, meal, cb) {
 		cb();
 	});
   });
+  return 1;
 }
 
 /* Menu Logic */
