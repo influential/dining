@@ -71,7 +71,7 @@ function menu(meal) {
   var day = new Date().getDay();
   if(meal == 0) {
     async.parallel([
-        function(cb) { screenshot("udcc", 0, cb) },
+        function(cb) { screenshot("udm", 0, cb) },
     	function(cb) { screenshot("seasons", 0, cb) },
     	function(cb) { screenshot("conversations", 0, cb) }
 	], function(err, results) {
@@ -102,7 +102,7 @@ function tweet() {
 	    callback: 'http://104.131.2.65/tweet'
 	});
 	var actions = [
-		twitter.uploadMedia("/root/dining/public/udcc.png", keys.oauth.AT, keys.oauth.ATS),
+		twitter.uploadMedia("/root/dining/public/udm.png", keys.oauth.AT, keys.oauth.ATS),
 		twitter.uploadMedia("/root/dining/public/seasons.png", keys.oauth.AT, keys.oauth.ATS),
 		twitter.uploadMedia("/root/dining/public/conversations.png", keys.oauth.AT, keys.oauth.ATS),
 		twitter.uploadMedia("/root/dining/public/storms.png", keys.oauth.AT, keys.oauth.ATS)
