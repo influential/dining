@@ -183,7 +183,7 @@ function tweet(cb) {
     		}*/
         ], function(err, results) {
     		if(err) console.log(err);
-    		console.log("uploaded" + results);
+    		console.log("uploaded" + results[0].media_id);
     		twitter.statuses("update", {media_ids: results}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		        	if (err) console.log(err);
 		        	console.log("tweeted");
