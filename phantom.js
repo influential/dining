@@ -7,7 +7,7 @@ var save = system.args[3];
 page.open(url, function(status) {
   if(save == 'seasons') page.render('/root/dining/public/seasons.png');
   if(save == 'conversations') page.render('/root/dining/public/conversations.png');
-  if(save == 'udcc') page.render('/root/dining/public/udcc.png');
+  if(save == 'udm') page.render('/root/dining/public/udm.png');
   if(save == 'storms') page.render('/root/dining/public/storms.png');
   var top, bottom;
   if(meal == 0) {
