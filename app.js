@@ -53,9 +53,41 @@ function screenshot(location, meal, cb) {
         gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
         .write('/root/dining/public/' + location + '.png', function (err) { 
             if(err) console.log(err);
-            cb();
+            join(cb);
         });
     });
+}
+
+/* Adjoin Screenshots */
+
+function join(callback) {
+	async.parallel([
+            function(cb) { 
+            	gm('/root/dining/public/seasons.png').append('/root/dining/public/seasons-title.png'); 
+            	cb(); 
+            },
+        	function(cb) { 
+            	gm('/root/dining/public/conversations.png').append('/root/dining/public/conversations-title.png')
+            	cb(); 
+            },
+            function(cb) { 
+            	gm('/root/dining/public/udm.png').append('/root/dining/public/udm-title.png'); 
+            	cb(); 
+            },
+            function(cb) { 
+            	gm('/root/dining/public/storms.png').append('/root/dining/public/storms-title.png'); 
+            	cb(); 
+            }
+        ], function(err, results) {
+            callback();
+           console.log("append");
+        });
+}
+
+/* Join Helper */
+
+function joiner(location, cb) {
+	
 }
 
 /* Menu Logic */
