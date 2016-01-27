@@ -69,6 +69,7 @@ function join() {
             		cb();
         	});
             },
+            function(cb) { 
         	gm('/root/dining/public/conversations.png').append('/root/dining/public/conversations-title.png')
             	.write('/root/dining/public/conversations.png', function (err) { 
             		if(err) console.log(err);
