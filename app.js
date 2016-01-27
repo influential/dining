@@ -166,9 +166,10 @@ function tweet(cb) {
     var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
 	var actions;
 	async.parallel([
-    		function() {
+    		function(cb) {
     			//var b64content = fs.readFileSync('/root/dining/public/udm.png', { encoding: 'base64' });
     			twitter.uploadMedia({media: '/root/dining/public/udm.png'}, keys.oauth.AT, keys.oauth.ATS);
+    			cb();
     			
     		}/*,
     		function() {
