@@ -54,13 +54,11 @@ function screenshot(location, meal) {
   childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
   	if(err) console.log(err.toString());
 	if(stderr) console.log(stderr.toString());
-	//if(stdout) console.log(stdout.toString());
 	var results = stdout.toString().split("---");
-	/*gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
+	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
 	.write('/root/dining/public/' + location + '.png', function (err) {
 		if(err) console.log(err);
-		return 1;
-	});*/
+	});
   });
 }
 
