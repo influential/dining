@@ -95,7 +95,7 @@ function menu(meal) {
         	console.log("screenshots")
         	async.series([
 			    function(cb){ join(cb) },
-			    function(cb){ cb() }
+			    function(cb){ tweet(cb) }
 			], function(err, results){
 			    console.log("all done");
 			});
@@ -162,22 +162,36 @@ function menu(meal) {
 
 /* Tweet Pictures */
 
-function tweet() {
+function tweet(cb) {
     var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
-	var actions = [
-    		twitter.uploadMedia("/root/dining/public/udm.png", keys.oauth.AT, keys.oauth.ATS),
-    		twitter.uploadMedia("/root/dining/public/seasons.png", keys.oauth.AT, keys.oauth.ATS),
-    		twitter.uploadMedia("/root/dining/public/conversations.png", keys.oauth.AT, keys.oauth.ATS),
-    		twitter.uploadMedia("/root/dining/public/storms.png", keys.oauth.AT, keys.oauth.ATS)
-        ]
-	async.parallel(actions, function(err, results) {
+	var actions;
+	async.parallel([
+    		function() {
+    			twitter.uploadMedia("/root/dining/public/udm.png", keys.oauth.AT, keys.oauth.ATS);
+    			
+    		},
+    		function() {
+    			twitter.uploadMedia("/root/dining/public/storms.png", keys.oauth.AT, keys.oauth.ATS);
+    			
+    		},
+    		function() {
+    			twitter.uploadMedia("/root/dining/public/conversations.png", keys.oauth.AT, keys.oauth.ATS);
+    			
+    		},
+    		function() {
+    			twitter.uploadMedia("/root/dining/public/storms.png", keys.oauth.AT, keys.oauth.ATS);
+    			
+    		}
+        ], function(err, results) {
     	if(err) console.log(err);
+    	console.log("uploaded");
     	twitter.statuses("update", {media_ids: results},
     		keys.oauth.AT,
     		keys.oauth.ATS,
     		function(err, data, response) {
 	        if (error) console.log(err);
-	            return true;
+	        console.log("tweeted");
+	            cb();
 	        }
       	);
   	});
