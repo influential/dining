@@ -62,13 +62,13 @@ function screenshot(location, meal, cb) {
 
 function join(cb) {
 	async.parallel([
-            function(cb) { joiner("seasons", cb) });
+            function(cb) { joiner("seasons", cb) })
             },
-            function(cb) { joiner("conversations", cb) });
+            function(cb) { joiner("conversations", cb) })
             },
-            function(cb) { joiner("storms", cb) });
+            function(cb) { joiner("storms", cb) })
             },
-            function(cb) { joiner("udm", cb) });
+            function(cb) { joiner("udm", cb) })
             }
         ], function(err, results) {
            console.log("append");
