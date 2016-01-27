@@ -15,7 +15,7 @@ var keys = require('./local.js');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
-app.get('/tweet', function(req, res) { menu(2) /* res.send(200) */ });
+app.get('/tweet', function(req, res) { menu(0) /* res.send(200) */ });
 app.get('/twitter', function(req, res) { authenticate() });
 app.get('/auth', function(req, res) { confirm(req) });
 
@@ -53,14 +53,14 @@ function screenshot(location, meal, cb) {
         gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
         .write('/root/dining/public/' + location + '.png', function (err) { 
             if(err) console.log(err);
-            join(cb);
+            cb();
         });
     });
 }
 
 /* Adjoin Screenshots */
 
-function join(callback) {
+function join() {
 	async.parallel([
             function(cb) { 
             	gm('/root/dining/public/seasons.png').append('/root/dining/public/seasons-title.png'); 
@@ -79,7 +79,6 @@ function join(callback) {
             	cb(); 
             }
         ], function(err, results) {
-            callback();
            console.log("append");
         });
 }
@@ -101,6 +100,7 @@ function menu(meal) {
         	function(cb) { screenshot("conversations", 0, cb) }
         ], function(err, results) {
             //tweet();
+            join();
            console.log("done");
         });
     } else if(meal == 1) {
