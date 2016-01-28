@@ -112,7 +112,6 @@ function post() {
     ], function(err, results) {
     	if(err) notify(false);//return post();
 		var ids = results.map(function(obj) { return obj[0].media_id });
-		console.log(ids);
 		tweet(twitter, ids);
   	});
 }
@@ -120,6 +119,7 @@ function post() {
 /* Tweet Pictures */
 
 function tweet(twitter, ids) {
+	console.log(ids);
 	twitter.statuses("update", {media_ids: ids}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		if(err) console.log(err);//return tweet(ids);
     	notify(true);
