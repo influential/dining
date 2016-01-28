@@ -55,13 +55,13 @@ function screenshot(location, meal, cb) {
 
 /* Adjoin Screenshots */
 
-function join(cb) {
+function join() {
 	async.parallel([
         function(cb) { gm('/root/dining/public/udm-title.png').append('/root/dining/public/udm.png').write('/root/dining/public/udm.png', cb) },
         function(cb) { gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png').write('/root/dining/public/seasons.png', cb) },
         function(cb) { gm('/root/dining/public/conversations-title.png').append('/root/dining/public/conversations.png').write('/root/dining/public/conversations.png', cb) },
         function(cb) { gm('/root/dining/public/storms-title.png').append('/root/dining/public/storms.png').write('/root/dining/public/storms.png', cb) },
-    ], cb);
+    ], tweet());
 }
 
 /* Menu Logic */
@@ -74,13 +74,14 @@ function menu(meal) {
         	function(cb) { screenshot("seasons", 0, cb) },
         	function(cb) { screenshot("conversations", 0, cb) }
         ], function(err, results) {
-        	console.log("screenshots")
-        	async.series([
+        	console.log("screenshots");
+        	join();
+        	/*async.series([
 			    function(cb){ join(cb) },
 			    //function(cb){ tweet(cb) }
 			], function(err, results){
 			    console.log("all done");
-			});
+			});*/
         });
     } else if(meal == 1) {
     	if(day == 0 || day == 6) {
@@ -144,7 +145,9 @@ function menu(meal) {
 
 /* Tweet Pictures */
 
-function tweet(cb) {
+function tweet() {
+	console.log("tweet");
+	return;
     var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
 	var actions;
 	async.parallel([
