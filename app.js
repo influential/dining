@@ -40,17 +40,6 @@ function run() {
   
 }
 
-/* Adjoin Screenshots */
-
-function join(cb) {
-	async.parallel([
-        function(cb) { gm('/root/dining/public/udm-title.png').append('/root/dining/public/udm.png').write('/root/dining/public/udm.png', cb) },
-        function(cb) { gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png').write('/root/dining/public/seasons.png', cb) },
-        function(cb) { gm('/root/dining/public/conversations-title.png').append('/root/dining/public/conversations.png').write('/root/dining/public/conversations.png', cb) },
-        function(cb) { gm('/root/dining/public/storms-title.png').append('/root/dining/public/storms.png').write('/root/dining/public/storms.png', cb) },
-    ], cb);
-}
-
 /* Screenshots/Crops Menu Page */
 
 function screenshot(location, meal, cb) {
@@ -64,6 +53,19 @@ function screenshot(location, meal, cb) {
     });
 }
 
+/* Adjoin Screenshots */
+
+function join() {
+	async.parallel([
+        function(cb) { gm('/root/dining/public/udm-title.png').append('/root/dining/public/udm.png').write('/root/dining/public/udm.png', cb) },
+        function(cb) { gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png').write('/root/dining/public/seasons.png', cb) },
+        function(cb) { gm('/root/dining/public/conversations-title.png').append('/root/dining/public/conversations.png').write('/root/dining/public/conversations.png', cb) },
+        function(cb) { gm('/root/dining/public/storms-title.png').append('/root/dining/public/storms.png').write('/root/dining/public/storms.png', cb) },
+    ], function() {
+    	tweet();
+    });
+}
+
 /* Menu Logic */
 
 function menu(meal) {
@@ -74,14 +76,7 @@ function menu(meal) {
         	function(cb) { screenshot("seasons", 0, cb) },
         	function(cb) { screenshot("conversations", 0, cb) }
         ], function(err, results) {
-        	console.log("screenshots");
-        	tweet();
-        	/*async.series([
-			    function(cb){ join(cb) },
-			    //function(cb){ tweet(cb) }
-			], function(err, results){
-			    console.log("all done");
-			});*/
+        	join();
         });
     } else if(meal == 1) {
     	if(day == 0 || day == 6) {
