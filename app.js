@@ -113,7 +113,7 @@ function post() {
     	if(err) return post();
 		var ids = results.map(function(obj) { return obj[0].media_id });
 		console.log(ids);
-		//tweet(ids);
+		tweet(ids);
   	});
 }
 
