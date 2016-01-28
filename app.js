@@ -113,13 +113,13 @@ function post() {
     	if(err) notify(false);//return post();
 		var ids = results.map(function(obj) { return obj[0].media_id });
 		console.log(ids);
-		tweet(ids);
+		tweet(twitter, ids);
   	});
 }
 
 /* Tweet Pictures */
 
-function tweet(ids) {
+function tweet(twitter, ids) {
 	twitter.statuses("update", {media_ids: ids}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		if(err) notify(false);//return tweet(ids);
     	notify(true);
