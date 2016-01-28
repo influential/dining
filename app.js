@@ -13,7 +13,7 @@ var keys = require('./local.js');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
-app.get('/est', function(req, res) { menu(0) });
+app.get('/test', function(req, res) { menu(0) });
 app.get('/tweet', function(req, res) { res.send(200) });
 app.get('/twitter', function(req, res) { authenticate() });
 app.get('/auth', function(req, res) { confirm(req) });
@@ -22,16 +22,9 @@ app.get('/auth', function(req, res) { confirm(req) });
 /* Cron Jobs */
 
 function run() {
-  
-    //Breakfast
     new CronJob('00 30 06 * * 1-5', function() { menu(0) }, null, true, 'America/Chicago');
-
-    //Lunch
     new CronJob('00 00 10 * * 0-6', function() { menu(1) }, null, true, 'America/Chicago');
-
-    //Dinner
     new CronJob('00 00 04 * * 0-6', function() { menu(2) }, null, true, 'America/Chicago');
-  
 }
 
 /* Screenshots/Crops Menu Page */
@@ -72,12 +65,13 @@ function join() {
 
 function menu(meal) {
     var day = new Date().getDay();
-    if(meal == 0) {
-        async.parallel([
+    var actions = [
             function(cb) { screenshot("udm", 0, cb) },
         	function(cb) { screenshot("seasons", 0, cb) },
         	function(cb) { screenshot("conversations", 0, cb) }
-        ], function(err, results) {
+        ];
+    if(meal == 0) {
+        async.parallel(actions, function(err, results) {
         	join();
         });
     } else if(meal == 1) {
@@ -170,7 +164,8 @@ function tweet(ids) {
 
 function authenticate(res) {
 	var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/auth' });
-	twitter.getRequestToken(function(error, requestToken, requestTokenSecret, results) {
+	twitter.getRequestToken(function(err, requestToken, requestTokenSecret, results) {
+		if(err) console.log(err);
 		process.env.RT = requestToken;
 		process.env.RTS = requestTokenSecret;
 		var url = "https://twitter.com/oauth/authenticate?oauth_token=" + requestToken;
@@ -182,7 +177,8 @@ function authenticate(res) {
 
 function confirm(req) {
 	var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/auth' });
-	twitter.getAccessToken(process.env.RT, process.env.RTS, req.query.oauth_verifier, function(error, accessToken, accessTokenSecret, results) {
+	twitter.getAccessToken(process.env.RT, process.env.RTS, req.query.oauth_verifier, function(err, accessToken, accessTokenSecret, results) {
+		if(err) console.log(err);
 		console.log("AccessToken: " + accessToken + "\nAccessTokenSecret: " + accessTokenSecret);
 	});
 }
