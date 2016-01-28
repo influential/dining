@@ -34,23 +34,20 @@ function screenshot(location, meal, cb) {
     var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
     var childArgs = ['/root/dining/phantom.js', url, meal, location];
     childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
-    	if(err) notify(false);
-        save(stdout.toString().split("---"), location, cb);
+        var results = stdout.toString().split("---");
+        gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
+	    .write('/root/dining/public/' + location + '.png', function(err) {
+	   		gm('/root/dining/public/' + location + 'title.png').append('/root/dining/public/' + location + 'png')
+	   		.write('/root/dining/public/' + location + '.png', function(err) { 
+	   			upload(location, cb);
+	   		});
+	    });
     });
 }
 
-function save(results, location, cb) {
-	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
-    .write('/root/dining/public/' + location + '.png', function(err) {
-   		if(err) notify(false);
-   		join(location, cb)
-    });
-}
-
-/* Adjoin Screenshots */
-
-function join(location, cb) {
-    gm('/root/dining/public/' + location + 'title.png').append('/root/dining/public/' + location + 'png').write('/root/dining/public/' + location + '.png', function(location, cb) { post(location, cb) });
+function upload(location, cb) {
+    var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
+	return twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
 }
 
 /* Menu Logic */
@@ -109,13 +106,6 @@ function menu(meal) {
         	join(actions, meal);
         });
     }
-}
-
-/* Upload Pictures */
-
-function post(location, cb) {
-    var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
-	return twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
 }
 
 /* Tweet Pictures */
