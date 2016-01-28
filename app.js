@@ -57,7 +57,7 @@ function join() {
         function(cb) { gm('/root/dining/public/storms-title.png').append('/root/dining/public/storms.png').write('/root/dining/public/storms.png', cb) },
     ], function(err) {
     	if(err) notify(false);//return join();
-    	post();
+    	post(actions, meal);
     });
 }
 
@@ -81,47 +81,62 @@ function menu(meal) {
     	function(cb) { screenshot("conversations", 2, cb) },
     	function(cb) { screenshot("storms", 2, cb) }
     ];
+    var actions = [
+		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/udm.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
+		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/seasons.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
+		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/conversations.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
+		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb) }
+    ];
     if(meal == 0) {
+    	actions = actions.slice(0, 3);
         async.parallel(breakfast, function(err, results) {
-        	join();
+        	join(actions, meal);
         });
     } else if(meal == 1) {
-    	if(day == 0 || day == 6) lunch = lunch.slice(0,2);
+    	if(day == 0 || day == 6) {
+    		lunch = lunch.slice(0,2);
+    		actions = actions.slice(0, 2);
+    	}
         async.parallel(lunch, function(err, results) {
-        	join();
+        	join(actions, meal);
         });
     } else {
-        if(day == 0) dinner = dinner.slice(0,2);
-		else if(day == 5) dinner = dinner.slice(0,3);
-        else if(day == 6) dinner = dinner.splice(2, 1);
+        if(day == 0) {
+        	dinner = dinner.slice(0,2);
+        	actions = actions.slice(0,2);
+        }
+		else if(day == 5) {
+			dinner = dinner.slice(0,3);
+			actions = actions.slice(0,3);
+		}
+        else if(day == 6) {
+        	dinner = dinner.splice(2, 1);
+        	actions = actions.splice(2, 1);
+        }
         async.parallel(dinner, function(err, results) {
-        	join();
+        	join(actions, meal);
         });
     }
 }
 
 /* Upload Pictures */
 
-function post() {
+function post(actions, meal) {
     var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
-	async.parallel([
-		//function(cb) { return twitter.uploadMedia({media: '/root/dining/public/udm.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
-		//function(cb) { return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
-		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/conversations.png'}, keys.oauth.AT, keys.oauth.ATS, cb) }
-		//function(cb) { return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb) }
-    ], function(err, results) {
+	async.parallel(actions, function(err, results) {
     	if(err) notify(false);//return post();
-    	console.log(results[0][0]);
 		var ids = results.map(function(obj) { return obj[0].media_id_string });
-		tweet(twitter, ids);
+		tweet(twitter, ids, meal);
   	});
 }
 
 /* Tweet Pictures */
 
-function tweet(twitter, ids) {
-	console.log(ids);
-	twitter.statuses("update", {status: "Just work", media_ids: ids}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
+function tweet(twitter, ids, meal) {
+	var text = "Breakfast";
+	if(meal == 1) text = "Lunch";
+	if(meal == 2) text = "Dinner";
+	twitter.statuses("update", {status: text, media_ids: ids}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		if(err) console.log(err);//return tweet(ids);
     	notify(true);
     });
