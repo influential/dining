@@ -50,7 +50,7 @@ function save(results, location, cb) {
 /* Adjoin Screenshots */
 
 function join(location, cb) {
-    gm('/root/dining/public/' + location + 'title.png').append('/root/dining/public/' + location + 'png').write('/root/dining/public/' + location + '.png', post(location, cb));
+    gm('/root/dining/public/' + location + 'title.png').append('/root/dining/public/' + location + 'png').write('/root/dining/public/' + location + '.png', function(location, cb) { post(location, cb) });
 }
 
 /* Menu Logic */
