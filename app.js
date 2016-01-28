@@ -62,7 +62,7 @@ function screenshot(location, meal, cb) {
 
 function join(cb) {
 	async.parallel([
-            joiner("seasons", cb),
+            function(cb) { joiner("seasons", cb) },
             function(cb) { joiner("conversations", cb) },
             function(cb) { joiner("storms", cb) },
             function(cb) { joiner("udm", cb) }
@@ -77,10 +77,7 @@ function join(cb) {
 
 function joiner(location, cb) {
 	gm('/root/dining/public/' + location + '-title.png').append('/root/dining/public/' + location + '.png')
-    .write('/root/dining/public/' + location + '.png', function (err) { 
-		if(err) console.log(err);
-		cb();
-	});
+    .write('/root/dining/public/' + location + '.png', cb);
 }
 
 /* Menu Logic */
