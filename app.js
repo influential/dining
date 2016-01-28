@@ -121,7 +121,7 @@ function post() {
 
 function tweet(twitter, ids) {
 	console.log(ids);
-	twitter.statuses("update", {media_ids: 692824188164280300}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
+	twitter.statuses("update", {status: "Just work", media_ids: ids}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		if(err) console.log(err);//return tweet(ids);
     	notify(true);
     });
