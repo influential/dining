@@ -70,16 +70,12 @@ function menu(meal) {
     	function(cb) { screenshot("conversations", 2, cb) },
     	function(cb) { screenshot("storms", 2, cb) }
     ];
-    /*var actions = [
-		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/udm.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
-		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/seasons.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
-		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/conversations.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
-		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb) }
-    ];*/
+    var actions;
     if(meal == 0) {
         async.parallel(breakfast, function(err, results) {
         	var ids = results.map(function(obj) { return obj[0].media_id_string });
-			tweet(ids, meal);
+        	console.log(ids);
+			//tweet(ids, meal);
         });
     } else if(meal == 1) {
     	if(day == 0 || day == 6) {
