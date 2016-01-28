@@ -65,72 +65,38 @@ function join() {
 
 function menu(meal) {
     var day = new Date().getDay();
-    var actions = [
-            function(cb) { screenshot("udm", 0, cb) },
-        	function(cb) { screenshot("seasons", 0, cb) },
-        	function(cb) { screenshot("conversations", 0, cb) }
-        ];
+    var breakfast = [
+        function(cb) { screenshot("udm", 0, cb) },
+    	function(cb) { screenshot("seasons", 0, cb) },
+    	function(cb) { screenshot("conversations", 0, cb) }
+    ];
+    var lunch = [
+        function(cb) { screenshot("udm", 1, cb) },
+    	function(cb) { screenshot("seasons", 1, cb) },
+    	function(cb) { screenshot("conversations", 1, cb) }
+    ];
+    var dinner = [
+        function(cb) { screenshot("udm", 2, cb) },
+    	function(cb) { screenshot("seasons", 2, cb) },
+    	function(cb) { screenshot("conversations", 2, cb) },
+    	function(cb) { screenshot("storms", 2, cb) }
+    ];
     if(meal == 0) {
-        async.parallel(actions, function(err, results) {
+        async.parallel(breakfast, function(err, results) {
         	join();
         });
     } else if(meal == 1) {
-    	if(day == 0 || day == 6) {
-            async.parallel([
-                function(cb) { screenshot("udm", 1, cb) },
-                function(cb) { screenshot("seasons", 1, cb) }
-            ], function(err, results) {
-                //tweet();
-               console.log("done");
-            });
-        } else {
-            async.parallel([
-                function(cb) { screenshot("udm", 1, cb) },
-                function(cb) { screenshot("seasons", 1, cb) },
-                function(cb) { screenshot("conversations", 1, cb) }
-            ], function(err, results) {
-                //tweet();
-               console.log("done");
-            });
-        }
+    	if(day == 0 || day == 6) lunch = lunch.slice(0,2);
+        async.parallel(lunch, function(err, results) {
+        	join();
+        });
     } else {
-        if(day == 0) {
-            async.parallel([
-                function(cb) { screenshot("udm", 2, cb) },
-                function(cb) { screenshot("seasons", 2, cb) }
-            ], function(err, results) {
-                //tweet();
-               console.log("done");
-            });
-        } else if(day == 5) {
-            async.parallel([
-                function(cb) { screenshot("udm", 2, cb) },
-                function(cb) { screenshot("seasons", 2, cb) },
-                function(cb) { screenshot("conversations", 2, cb) }
-            ], function(err, results) {
-                //tweet();
-               console.log("done");
-            });
-        } else if(day == 6) {
-            async.parallel([
-                function(cb) { screenshot("udm", 2, cb) },
-                function(cb) { screenshot("seasons", 2, cb) },
-                function(cb) { screenshot("storms", 2, cb) }
-            ], function(err, results) {
-                //tweet();
-               console.log("done");
-            });
-        } else {
-            async.parallel([
-                function(cb) { screenshot("udm", 2, cb) },
-                function(cb) { screenshot("seasons", 2, cb) },
-                function(cb) { screenshot("conversations", 2, cb) },
-                function(cb) { screenshot("storms", 2, cb) }
-            ], function(err, results) {
-                //tweet();
-               console.log("done");
-            });
-        }
+        if(day == 0) dinner = dinner.slice(0,2);
+		else if(day == 5) dinner = dinner.slice(0,3);
+        else if(day == 6) dinner = dinner.splice(2, 1);
+        async.parallel(dinner, function(err, results) {
+        	join();
+        });
     }
 }
 
