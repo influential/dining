@@ -112,7 +112,7 @@ function post() {
     ], function(err, results) {
     	if(err) notify(false);//return post();
     	console.log(results[0][0]);
-		var ids = results.map(function(obj) { return obj[0].media_id });
+		var ids = results.map(function(obj) { return obj[0].media_id_string });
 		tweet(twitter, ids);
   	});
 }
