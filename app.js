@@ -62,7 +62,7 @@ function screenshot(location, meal, cb) {
 
 function join(cb) {
 	async.parallel([
-            gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png').write('/root/dining/public/seasons.png', cb()),
+            //gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png').write('/root/dining/public/seasons.png', cb()),
             function(cb) { joiner("conversations", cb) },
             function(cb) { joiner("storms", cb) },
             function(cb) { joiner("udm", cb) }
