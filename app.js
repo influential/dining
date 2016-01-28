@@ -111,7 +111,7 @@ function post() {
 		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb) }
     ], function(err, results) {
     	if(err) notify(false);//return post();
-		var ids = results.map(function(obj) { return obj[0].media_id });
+		var ids = results.map(function(obj) { return obj[0].media_id + "" });
 		tweet(twitter, ids);
   	});
 }
