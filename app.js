@@ -1,5 +1,3 @@
-/* Node Modules */
-
 var twitterAPI = require('node-twitter-api');
 var async = require('async');
 var path = require('path');
@@ -51,10 +49,7 @@ function screenshot(location, meal, cb) {
     childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
         var results = stdout.toString().split("---");
         gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
-        .write('/root/dining/public/' + location + '.png', function (err) { 
-            if(err) console.log(err);
-            cb();
-        });
+        .write('/root/dining/public/' + location + '.png', cb);
     });
 }
 
@@ -62,15 +57,15 @@ function screenshot(location, meal, cb) {
 
 function join(cb) {
 	async.parallel([
-            function(cb) { joiner("seasons", cb) },
-            function(cb) { joiner("conversations", cb) },
-            function(cb) { joiner("storms", cb) },
-            function(cb) { joiner("udm", cb) }
-        ], function(err, results) {
-        	if(err) console.log(err);
-           console.log("append");
-           cb();
-        });
+        function(cb) { gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png').write('/root/dining/public/seasons.png', cb) },
+        function(cb) { joiner("conversations", cb) },
+        function(cb) { joiner("storms", cb) },
+        function(cb) { joiner("udm", cb) }
+    ], function(err, results) {
+    	if(err) console.log(err);
+       console.log("append");
+       cb();
+    });
 }
 
 /* Join Helper */
