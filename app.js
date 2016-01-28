@@ -49,7 +49,7 @@ function screenshot(location, meal, cb) {
     childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
         var results = stdout.toString().split("---");
         gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
-        .write('/root/dining/public/' + location + '.png', join(cb));
+        .write('/root/dining/public/' + location + '.png', function(cb) { join(cb) });
     });
 }
 
@@ -61,7 +61,7 @@ function join(cb) {
         function(cb) { gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png').write('/root/dining/public/seasons.png', cb) },
         function(cb) { gm('/root/dining/public/conversations-title.png').append('/root/dining/public/conversations.png').write('/root/dining/public/conversations.png', cb) },
         function(cb) { gm('/root/dining/public/storms-title.png').append('/root/dining/public/storms.png').write('/root/dining/public/storms.png', cb) },
-    ], cb());
+    ], cb);
 }
 
 /* Menu Logic */
