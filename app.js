@@ -67,6 +67,7 @@ function join(cb) {
             function(cb) { joiner("storms", cb) },
             function(cb) { joiner("udm", cb) }
         ], function(err, results) {
+        	if(err) console.log(err);
            console.log("append");
            cb();
         });
