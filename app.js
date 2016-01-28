@@ -34,7 +34,7 @@ function screenshot(location, meal, cb) {
     var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
     var childArgs = ['/root/dining/phantom.js', url, meal, location];
     childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
-    	if(err) return screenshot(location, meal, cb);
+    	if(err) notify(false);//return screenshot(location, meal, cb);
         save(stdout.toString().split("---"), location, cb);
     });
 }
@@ -42,7 +42,7 @@ function screenshot(location, meal, cb) {
 function save(results, location, cb) {
 	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
     .write('/root/dining/public/' + location + '.png', function(err) {
-   		if(err) return save(results, location, cb);
+   		if(err) notify(false);//return save(results, location, cb);
    		cb();
     });
 }
@@ -56,7 +56,7 @@ function join() {
         function(cb) { gm('/root/dining/public/conversations-title.png').append('/root/dining/public/conversations.png').write('/root/dining/public/conversations.png', cb) },
         function(cb) { gm('/root/dining/public/storms-title.png').append('/root/dining/public/storms.png').write('/root/dining/public/storms.png', cb) },
     ], function(err) {
-    	if(err) return join();
+    	if(err) notify(false);//return join();
     	post();
     });
 }
@@ -110,7 +110,7 @@ function post() {
 		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/conversations.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
 		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb) }
     ], function(err, results) {
-    	if(err) return post();
+    	if(err) notify(false);//return post();
 		var ids = results.map(function(obj) { return obj[0].media_id });
 		console.log(ids);
 		tweet(ids);
@@ -121,7 +121,7 @@ function post() {
 
 function tweet(ids) {
 	twitter.statuses("update", {media_ids: ids}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
-		if(err) return tweet(ids);
+		if(err) notify(false);//return tweet(ids);
     	notify(true);
     });
 }
@@ -153,4 +153,5 @@ function confirm(req) {
 
 function notify(success) {
 	if(success) console.log("notify");
+	else console.log("fail");
 }
