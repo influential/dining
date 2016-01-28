@@ -58,7 +58,7 @@ function menu(meal) {
     var breakfast = [
         function(cb) { screenshot("udm", 0, twitter, cb) },
     	function(cb) { screenshot("seasons", 0, twitter, cb) },
-    	function(cb) { screenshot("conversations", twitter, 0, cb) }
+    	function(cb) { screenshot("conversations", 0, twitter, cb) }
     ];
     var lunch = [
         function(cb) { screenshot("udm", 1, cb) },
