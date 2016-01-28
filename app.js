@@ -27,9 +27,9 @@ function run() {
     new CronJob('00 00 04 * * 0-6', function() { menu(2) }, null, true, 'America/Chicago');
 }
 
-/* Screenshots/Crops Menu Page */
+/* Screenshots/Crops Menu Page and Uploads to Twitter */
 
-function screenshot(location, meal, cb) {
+function screenshot(location, meal, twitter, cb) {
     var date = new Date().toISOString().slice(0,10);
     var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
     var childArgs = ['/root/dining/phantom.js', url, meal, location];
@@ -39,7 +39,7 @@ function screenshot(location, meal, cb) {
 	    .write('/root/dining/public/' + location + '.png', function(err) {
 	   		gm('/root/dining/public/' + location + 'title.png').append('/root/dining/public/' + location + 'png')
 	   		.write('/root/dining/public/' + location + '.png', function(err) { 
-	   			upload(location, cb);
+	   			return twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
 	   		});
 	    });
     });
@@ -54,10 +54,11 @@ function upload(location, cb) {
 
 function menu(meal) {
     var day = new Date().getDay();
+    var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
     var breakfast = [
-        function(cb) { screenshot("udm", 0, cb) },
-    	function(cb) { screenshot("seasons", 0, cb) },
-    	function(cb) { screenshot("conversations", 0, cb) }
+        function(cb) { screenshot("udm", 0, twitter, cb) },
+    	function(cb) { screenshot("seasons", 0, twitter, cb) },
+    	function(cb) { screenshot("conversations", twitter, 0, cb) }
     ];
     var lunch = [
         function(cb) { screenshot("udm", 1, cb) },
@@ -70,34 +71,21 @@ function menu(meal) {
     	function(cb) { screenshot("conversations", 2, cb) },
     	function(cb) { screenshot("storms", 2, cb) }
     ];
-    var actions;
     if(meal == 0) {
         async.parallel(breakfast, function(err, results) {
         	var ids = results.map(function(obj) { return obj[0].media_id_string });
         	console.log(ids);
-			//tweet(ids, meal);
+			tweet(twitter, ids, meal);
         });
     } else if(meal == 1) {
-    	if(day == 0 || day == 6) {
-    		lunch = lunch.slice(0,2);
-    		actions = actions.slice(0, 2);
-    	}
+    	if(day == 0 || day == 6) lunch = lunch.slice(0,2);
         async.parallel(lunch, function(err, results) {
         	//join(actions, meal);
         });
     } else {
-        if(day == 0) {
-        	dinner = dinner.slice(0,2);
-        	actions = actions.slice(0,2);
-        }
-		else if(day == 5) {
-			dinner = dinner.slice(0,3);
-			actions = actions.slice(0,3);
-		}
-        else if(day == 6) {
-        	dinner = dinner.splice(2, 1);
-        	actions = actions.splice(2, 1);
-        }
+        if(day == 0) dinner = dinner.slice(0,2);
+		else if(day == 5) dinner = dinner.slice(0,3);
+        else if(day == 6) dinner = dinner.splice(2, 1);
         async.parallel(dinner, function(err, results) {
         	join(actions, meal);
         });
@@ -107,7 +95,6 @@ function menu(meal) {
 /* Tweet Pictures */
 
 function tweet(twitter, ids, meal) {
-	var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
 	var text = "Breakfast";
 	if(meal == 1) text = "Lunch";
 	if(meal == 2) text = "Dinner";
