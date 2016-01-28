@@ -49,7 +49,7 @@ function save(results, location, cb) {
 
 /* Adjoin Screenshots */
 
-function join() {
+function join(actions, meal) {
 	async.parallel([
         function(cb) { gm('/root/dining/public/udm-title.png').append('/root/dining/public/udm.png').write('/root/dining/public/udm.png', cb) },
         function(cb) { gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png').write('/root/dining/public/seasons.png', cb) },
