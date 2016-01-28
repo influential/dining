@@ -40,6 +40,17 @@ function run() {
   
 }
 
+/* Adjoin Screenshots */
+
+function join(cb) {
+	async.parallel([
+        function(cb) { gm('/root/dining/public/udm-title.png').append('/root/dining/public/udm.png').write('/root/dining/public/udm.png', cb) },
+        function(cb) { gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png').write('/root/dining/public/seasons.png', cb) },
+        function(cb) { gm('/root/dining/public/conversations-title.png').append('/root/dining/public/conversations.png').write('/root/dining/public/conversations.png', cb) },
+        function(cb) { gm('/root/dining/public/storms-title.png').append('/root/dining/public/storms.png').write('/root/dining/public/storms.png', cb) },
+    ], cb);
+}
+
 /* Screenshots/Crops Menu Page */
 
 function screenshot(location, meal, cb) {
@@ -51,17 +62,6 @@ function screenshot(location, meal, cb) {
         gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
         .write('/root/dining/public/' + location + '.png', join(cb));
     });
-}
-
-/* Adjoin Screenshots */
-
-function join(cb) {
-	async.parallel([
-        function(cb) { gm('/root/dining/public/udm-title.png').append('/root/dining/public/udm.png').write('/root/dining/public/udm.png', cb) },
-        function(cb) { gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png').write('/root/dining/public/seasons.png', cb) },
-        function(cb) { gm('/root/dining/public/conversations-title.png').append('/root/dining/public/conversations.png').write('/root/dining/public/conversations.png', cb) },
-        function(cb) { gm('/root/dining/public/storms-title.png').append('/root/dining/public/storms.png').write('/root/dining/public/storms.png', cb) },
-    ], cb);
 }
 
 /* Menu Logic */
