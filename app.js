@@ -34,7 +34,7 @@ function screenshot(location, meal, cb) {
     var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
     var childArgs = ['/root/dining/phantom.js', url, meal, location];
     childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
-    	if(err) notify(false);//return screenshot(location, meal, cb);
+    	if(err) notify(false);
         save(stdout.toString().split("---"), location, cb);
     });
 }
@@ -42,23 +42,15 @@ function screenshot(location, meal, cb) {
 function save(results, location, cb) {
 	gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
     .write('/root/dining/public/' + location + '.png', function(err) {
-   		if(err) notify(false);//return save(results, location, cb);
-   		cb();
+   		if(err) notify(false);
+   		join(location, cb)
     });
 }
 
 /* Adjoin Screenshots */
 
-function join(actions, meal) {
-	async.parallel([
-        function(cb) { gm('/root/dining/public/udm-title.png').append('/root/dining/public/udm.png').write('/root/dining/public/udm.png', cb) },
-        function(cb) { gm('/root/dining/public/seasons-title.png').append('/root/dining/public/seasons.png').write('/root/dining/public/seasons.png', cb) },
-        function(cb) { gm('/root/dining/public/conversations-title.png').append('/root/dining/public/conversations.png').write('/root/dining/public/conversations.png', cb) },
-        function(cb) { gm('/root/dining/public/storms-title.png').append('/root/dining/public/storms.png').write('/root/dining/public/storms.png', cb) },
-    ], function(err) {
-    	if(err) notify(false);//return join();
-    	post(actions, meal);
-    });
+function join(location, cb) {
+    gm('/root/dining/public/' + location + 'title.png').append('/root/dining/public/' + location + 'png').write('/root/dining/public/' + location + '.png', post(location, cb));
 }
 
 /* Menu Logic */
@@ -81,16 +73,16 @@ function menu(meal) {
     	function(cb) { screenshot("conversations", 2, cb) },
     	function(cb) { screenshot("storms", 2, cb) }
     ];
-    var actions = [
+    /*var actions = [
 		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/udm.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
 		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/seasons.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
 		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/conversations.png'}, keys.oauth.AT, keys.oauth.ATS, cb) },
 		function(cb) { return twitter.uploadMedia({media: '/root/dining/public/storms.png'}, keys.oauth.AT, keys.oauth.ATS, cb) }
-    ];
+    ];*/
     if(meal == 0) {
-    	actions = actions.slice(0, 3);
         async.parallel(breakfast, function(err, results) {
-        	join(actions, meal);
+        	var ids = results.map(function(obj) { return obj[0].media_id_string });
+			tweet(ids, meal);
         });
     } else if(meal == 1) {
     	if(day == 0 || day == 6) {
@@ -98,7 +90,7 @@ function menu(meal) {
     		actions = actions.slice(0, 2);
     	}
         async.parallel(lunch, function(err, results) {
-        	join(actions, meal);
+        	//join(actions, meal);
         });
     } else {
         if(day == 0) {
@@ -121,18 +113,15 @@ function menu(meal) {
 
 /* Upload Pictures */
 
-function post(actions, meal) {
+function post(location, cb) {
     var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
-	async.parallel(actions, function(err, results) {
-    	if(err) notify(false);//return post();
-		var ids = results.map(function(obj) { return obj[0].media_id_string });
-		tweet(twitter, ids, meal);
-  	});
+	return twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
 }
 
 /* Tweet Pictures */
 
 function tweet(twitter, ids, meal) {
+	var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
 	var text = "Breakfast";
 	if(meal == 1) text = "Lunch";
 	if(meal == 2) text = "Dinner";
