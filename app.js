@@ -13,7 +13,7 @@ var keys = require('./local.js');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.listen(3000);
-app.get('/test', function(req, res) { menu(0) });
+app.get('/test', function(req, res) { menu(1) });
 app.get('/tweet', function(req, res) { res.send(200) });
 app.get('/twitter', function(req, res) { authenticate() });
 app.get('/auth', function(req, res) { confirm(req) });
@@ -77,14 +77,16 @@ function menu(meal) {
     } else if(meal == 1) {
     	if(day == 0 || day == 6) lunch = lunch.slice(0,2);
         async.parallel(lunch, function(err, results) {
-        	//join(actions, meal);
+        	var ids = results.map(function(obj) { return obj[0].media_id_string });
+			tweet(twitter, ids, meal);
         });
     } else {
         if(day == 0) dinner = dinner.slice(0,2);
 		else if(day == 5) dinner = dinner.slice(0,3);
         else if(day == 6) dinner = dinner.splice(2, 1);
         async.parallel(dinner, function(err, results) {
-        	join(actions, meal);
+        	var ids = results.map(function(obj) { return obj[0].media_id_string });
+			tweet(twitter, ids, meal);
         });
     }
 }
@@ -92,11 +94,11 @@ function menu(meal) {
 /* Tweet Pictures */
 
 function tweet(twitter, ids, meal) {
-	var text = "Breakfasts";
+	var text = "Breakfast";
 	if(meal == 1) text = "Lunch";
 	if(meal == 2) text = "Dinner";
 	console.log(ids);
-	twitter.statuses("update", {status: text, media_ids: ['692930647271276544','692932495113871360','692932497802444800']}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
+	twitter.statuses("update", {status: text, media_ids: ids}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		if(err) console.log(err);//return tweet(ids);
     	notify(true);
     });
