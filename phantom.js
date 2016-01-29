@@ -4,6 +4,7 @@ var url = system.args[1];
 var meal = system.args[2];
 var save = system.args[3];
 
+page.viewportSize = {width: 390, height: 2500};
 page.open(url, function(status) {
   if(save == 'seasons') page.render('/root/dining/public/seasons.png');
   if(save == 'conversations') page.render('/root/dining/public/conversations.png');
