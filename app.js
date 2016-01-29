@@ -13,7 +13,7 @@ var keys = require('./local.js');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.get('/tweet', function(req, res) { res.send(200) });
-//app.get('/test', function(req, res) { menu(1) });
+app.get('/test', function(req, res) { menu(1) });
 //app.get('/twitter', function(req, res) { authenticate() });
 //app.get('/auth', function(req, res) { confirm(req) });
 app.listen(3000);
