@@ -48,11 +48,6 @@ function screenshot(location, meal, twitter, cb) {
     });
 }
 
-function upload(location, cb) {
-    var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.oauth.CKS, callback: 'http://104.131.2.65:3000/tweet' });
-	return twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
-}
-
 /* Menu Logic */
 
 function menu(meal) {
