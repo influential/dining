@@ -34,11 +34,14 @@ function screenshot(location, meal, twitter, cb) {
     var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
     var childArgs = ['/root/dining/phantom.js', url, meal, location];
     childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
+    	if(err) console.log(err);
         var results = stdout.toString().split("---");
         gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
 	    .write('/root/dining/public/' + location + '.png', function(err) {
+	    	if(err) console.log(err);
 	   		gm('/root/dining/public/' + location + 'title.png').append('/root/dining/public/' + location + 'png')
-	   		.write('/root/dining/public/' + location + '.png', function(err) { 
+	   		.write('/root/dining/public/' + location + '.png', function(err) {
+	   			if(err) console.log(err);
 	   			return twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
 	   		});
 	    });
