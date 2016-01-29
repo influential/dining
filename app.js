@@ -13,7 +13,7 @@ var keys = require('./local.js');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.get('/tweet', function(req, res) { res.send(200) });
-app.get('/test', function(req, res) { menu(1) });
+//app.get('/test', function(req, res) { menu(1) });
 //app.get('/login', function(req, res) { authenticate() });
 //app.get('/auth', function(req, res) { confirm(req) });
 app.listen(3000);
@@ -112,8 +112,8 @@ function tweet(ids, meal) {
 /* Status Notification */
 
 function notify(success) {
-	if(success) console.log("notify");
-	else console.log("fail");
+	if(success) console.log("Posted");
+	else console.log("Failed");
 }
 
 /* Oauth Authentication */
