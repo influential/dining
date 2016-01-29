@@ -74,7 +74,6 @@ function menu(meal) {
     if(meal == 0) {
         async.parallel(breakfast, function(err, results) {
         	var ids = results.map(function(obj) { return obj[0].media_id_string });
-        	console.log(ids);
 			tweet(twitter, ids, meal);
         });
     } else if(meal == 1) {
@@ -98,6 +97,7 @@ function tweet(twitter, ids, meal) {
 	var text = "Breakfast";
 	if(meal == 1) text = "Lunch";
 	if(meal == 2) text = "Dinner";
+	console.log(ids);
 	twitter.statuses("update", {status: text, media_ids: ids}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		if(err) console.log(err);//return tweet(ids);
     	notify(true);
