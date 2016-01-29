@@ -98,7 +98,7 @@ function tweet(twitter, ids, meal) {
 	if(meal == 1) text = "Lunch";
 	if(meal == 2) text = "Dinner";
 	ids = [ '692933996334989312', '692933993004666880'];
-	twitter.statuses("update", {status: text, media_ids: ids[0], media_ids: ids[1]}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
+	twitter.statuses("update", {status: text, media_ids: ids[0] + ',' + ids[1]}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		if(err) console.log(err);//return tweet(ids);
     	notify(true);
     });
