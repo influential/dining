@@ -42,7 +42,7 @@ function screenshot(location, meal, twitter, cb) {
 	   		gm('/root/dining/public/' + location + '-title.png').append('/root/dining/public/' + location + '.png')
 	   		.write('/root/dining/public/' + location + '.png', function(err) {
 	   			if(err) console.log(err);
-	   			return twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
+	   			twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
 	   		});
 	    });
     });
@@ -78,7 +78,8 @@ function menu(meal) {
     	if(day == 0 || day == 6) lunch = lunch.slice(0,2);
         async.parallel(lunch, function(err, results) {
         	var ids = results.map(function(obj) { return obj[0].media_id_string });
-			tweet(twitter, ids.join(), meal);
+        	console.log(ids);
+			//tweet(twitter, ids.join(), meal);
         });
     } else {
         if(day == 0) dinner = dinner.slice(0,2);
