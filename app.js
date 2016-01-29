@@ -12,12 +12,12 @@ var keys = require('./local.js');
 
 var app = express();
 app.use(express.static(__dirname + '/public'));
-app.listen(3000);
-app.get('/test', function(req, res) { menu(1) });
 app.get('/tweet', function(req, res) { res.send(200) });
-app.get('/twitter', function(req, res) { authenticate() });
-app.get('/auth', function(req, res) { confirm(req) });
-//run();
+//app.get('/test', function(req, res) { menu(1) });
+//app.get('/twitter', function(req, res) { authenticate() });
+//app.get('/auth', function(req, res) { confirm(req) });
+app.listen(3000);
+run();
 
 /* Cron Jobs */
 
@@ -72,7 +72,7 @@ function menu(meal) {
     if(meal == 0) {
         async.parallel(breakfast, function(err, results) {
         	var ids = results.map(function(obj) { return obj[0].media_id_string });
-			tweet(twitter, ids, meal);
+			tweet(twitter, ids.join(), meal);
         });
     } else if(meal == 1) {
     	if(day == 0 || day == 6) lunch = lunch.slice(0,2);
@@ -86,7 +86,7 @@ function menu(meal) {
         else if(day == 6) dinner = dinner.splice(2, 1);
         async.parallel(dinner, function(err, results) {
         	var ids = results.map(function(obj) { return obj[0].media_id_string });
-			tweet(twitter, ids, meal);
+			tweet(twitter, ids.join(), meal);
         });
     }
 }
