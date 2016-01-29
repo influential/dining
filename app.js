@@ -43,10 +43,14 @@ function screenshot(location, meal, twitter, cb) {
 	   		.write('/root/dining/public/' + location + '.png', function(err) {
 	   			if(err) console.log(err);
 	   			console.log(location);
-	   			twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
+	   			upload(location, cb);
 	   		});
 	    });
     });
+}
+
+function upload(location, cb) {
+	twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
 }
 
 /* Menu Logic */
