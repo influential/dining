@@ -59,9 +59,9 @@ function menu(meal) {
     	function(cb) { screenshot("conversations", 0, twitter, cb) }
     ];
     var lunch = [
-        function(cb) { screenshot("udm", 1, cb) },
-    	function(cb) { screenshot("seasons", 1, cb) },
-    	function(cb) { screenshot("conversations", 1, cb) }
+        function(cb) { /*screenshot("udm", 1, cb)*/ cb() },
+    	function(cb) { /*screenshot("seasons", 1, cb)*/ cb() },
+    	function(cb) { /*screenshot("conversations", 1, cb)*/ cb() }
     ];
     var dinner = [
         function(cb) { screenshot("udm", 2, cb) },
@@ -77,7 +77,7 @@ function menu(meal) {
     } else if(meal == 1) {
     	if(day == 0 || day == 6) lunch = lunch.slice(0,2);
         async.parallel(lunch, function(err, results) {
-        	var ids = results.map(function(obj) { return obj[0].media_id_string });
+        	var ids = 0;//results.map(function(obj) { return obj[0].media_id_string });
 			tweet(twitter, ids, meal);
         });
     } else {
@@ -97,7 +97,7 @@ function tweet(twitter, ids, meal) {
 	var text = "Breakfast";
 	if(meal == 1) text = "Lunch";
 	if(meal == 2) text = "Dinner";
-	console.log(ids);
+	ids = [ '692933996334989312', '692933993004666880'];
 	twitter.statuses("update", {status: text, media_ids: ids[0], media_ids: ids[1]}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		if(err) console.log(err);//return tweet(ids);
     	notify(true);
