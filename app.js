@@ -42,7 +42,7 @@ function screenshot(location, meal, twitter, cb) {
 	   		gm('/root/dining/public/' + location + '-title.png').append('/root/dining/public/' + location + '.png')
 	   		.write('/root/dining/public/' + location + '.png', function(err) {
 	   			if(err) console.log(err);
-	   			console.log(twitter);
+	   			console.log(location);
 	   			twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
 	   		});
 	    });
