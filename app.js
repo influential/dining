@@ -92,11 +92,11 @@ function menu(meal) {
 /* Tweet Pictures */
 
 function tweet(twitter, ids, meal) {
-	var text = "Breakfast";
+	var text = "Breakfasts";
 	if(meal == 1) text = "Lunch";
 	if(meal == 2) text = "Dinner";
 	console.log(ids);
-	twitter.statuses("update", {status: text, media_ids: ['692932492190441472','692932495113871360','692932497802444800']}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
+	twitter.statuses("update", {status: text, media_ids: ['692930647271276544','692932495113871360','692932497802444800']}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
 		if(err) console.log(err);//return tweet(ids);
     	notify(true);
     });
