@@ -59,9 +59,9 @@ function menu(meal) {
     	function(cb) { screenshot("conversations", 0, twitter, cb) }
     ];
     var lunch = [
-        function(cb) { /*screenshot("udm", 1, cb)*/ cb() },
-    	function(cb) { /*screenshot("seasons", 1, cb)*/ cb() },
-    	function(cb) { /*screenshot("conversations", 1, cb)*/ cb() }
+        function(cb) { screenshot("udm", 1, cb) },
+    	function(cb) { screenshot("seasons", 1, cb) },
+    	function(cb) { screenshot("conversations", 1, cb) }
     ];
     var dinner = [
         function(cb) { screenshot("udm", 2, cb) },
@@ -77,8 +77,8 @@ function menu(meal) {
     } else if(meal == 1) {
     	if(day == 0 || day == 6) lunch = lunch.slice(0,2);
         async.parallel(lunch, function(err, results) {
-        	var ids = 0;//results.map(function(obj) { return obj[0].media_id_string });
-			tweet(twitter, ids, meal);
+        	var ids = results.map(function(obj) { return obj[0].media_id_string });
+			tweet(twitter, ids.join(), meal);
         });
     } else {
         if(day == 0) dinner = dinner.slice(0,2);
@@ -94,12 +94,13 @@ function menu(meal) {
 /* Tweet Pictures */
 
 function tweet(twitter, ids, meal) {
-	var text = "Breakfast";
-	if(meal == 1) text = "Lunchttt";
-	if(meal == 2) text = "Dinner";
-	ids = [ '692933996334989312', '692933996188176384'];
-	twitter.statuses("update", {status: text, media_ids: ids[0] + ',' + ids[1]}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
-		if(err) console.log(err);//return tweet(ids);
+	var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+	var day = days[new Date().getDay()];
+	var text = " Breakfast";
+	if(meal == 1) text = " Lunch";
+	if(meal == 2) text = " Dinner";
+	twitter.statuses("update", {status: day + text, media_ids: ids}, keys.oauth.AT, keys.oauth.ATS, function(err, data, response) {
+		if(err) console.log(err);
     	notify(true);
     });
 }
