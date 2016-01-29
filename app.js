@@ -42,15 +42,10 @@ function screenshot(location, meal, twitter, cb) {
 	   		gm('/root/dining/public/' + location + '-title.png').append('/root/dining/public/' + location + '.png')
 	   		.write('/root/dining/public/' + location + '.png', function(err) {
 	   			if(err) console.log(err);
-	   			console.log(location);
-	   			upload(location, cb);
+	   			twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
 	   		});
 	    });
     });
-}
-
-function upload(location, cb) {
-	twitter.uploadMedia({media: '/root/dining/public/'+ location + '.png'}, keys.oauth.AT, keys.oauth.ATS, cb);
 }
 
 /* Menu Logic */
@@ -64,15 +59,15 @@ function menu(meal) {
     	function(cb) { screenshot("conversations", 0, twitter, cb) }
     ];
     var lunch = [
-        function(cb) { screenshot("udm", 1, cb) },
-    	function(cb) { screenshot("seasons", 1, cb) },
-    	function(cb) { screenshot("conversations", 1, cb) }
+        function(cb) { screenshot("udm", 1, twitter, cb) },
+    	function(cb) { screenshot("seasons", 1, twitter, cb) },
+    	function(cb) { screenshot("conversations", 1, twitter, cb) }
     ];
     var dinner = [
-        function(cb) { screenshot("udm", 2, cb) },
-    	function(cb) { screenshot("seasons", 2, cb) },
-    	function(cb) { screenshot("conversations", 2, cb) },
-    	function(cb) { screenshot("storms", 2, cb) }
+        function(cb) { screenshot("udm", 2, twitter, cb) },
+    	function(cb) { screenshot("seasons", 2, twitter, cb) },
+    	function(cb) { screenshot("conversations", 2, twitter, cb) },
+    	function(cb) { screenshot("storms", 2, twitter, cb) }
     ];
     if(meal == 0) {
         async.parallel(breakfast, function(err, results) {
