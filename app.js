@@ -13,7 +13,7 @@ var keys = require('./local.js');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.get('/tweet', function(req, res) { res.send(200) });
-app.get('/test', function(req, res) { menu(1) });
+//app.get('/test', function(req, res) { menu(1) });
 //app.get('/login', function(req, res) { authenticate() });
 //app.get('/auth', function(req, res) { confirm(req) });
 app.listen(3000);
@@ -36,12 +36,10 @@ function run() {
 function screenshot(location, meal, cb) {
     var date = new Date().toISOString().slice(0,10);
     var url = 'http://dining.iastate.edu/menus/' + location + '/' + date;
-    console.log(url + "\n");
     var childArgs = ['/root/dining/phantom.js', url, meal, location];
     childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
     	if(err) console.log(err);
         var results = stdout.toString().split("---");
-        console.log(results);
         gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
 	    .write('/root/dining/public/' + location + '.png', function(err) {
 	    	if(err) console.log(err);
