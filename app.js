@@ -13,7 +13,7 @@ var keys = require('./local.js');
 var app = express();
 app.use(express.static(__dirname + '/public'));
 app.get('/tweet', function(req, res) { res.send(200) });
-//app.get('/test', function(req, res) { menu(1) });
+app.get('/test', function(req, res) { menu(1) });
 //app.get('/login', function(req, res) { authenticate() });
 //app.get('/auth', function(req, res) { confirm(req) });
 app.listen(3000);
@@ -40,6 +40,7 @@ function screenshot(location, meal, cb) {
     childProcess.execFile(phantomjs.path, childArgs, function(err, stdout, stderr) {
     	if(err) console.log(err);
         var results = stdout.toString().split("---");
+        console.log(results);
         gm('/root/dining/public/' + location + '.png').crop(1000, parseInt(results[1]) - parseInt(results[0]), 0, parseInt(results[0]))
 	    .write('/root/dining/public/' + location + '.png', function(err) {
 	    	if(err) console.log(err);
