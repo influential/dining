@@ -28,7 +28,7 @@ var twitter = new twitterAPI({ consumerKey: keys.oauth.CK, consumerSecret: keys.
 function run() {
     new CronJob('00 30 06 * * 1-5', function() { menu(0) }, null, true, 'America/Chicago');
     new CronJob('00 00 10 * * 0-6', function() { menu(1) }, null, true, 'America/Chicago');
-    new CronJob('00 00 04 * * 0-6', function() { menu(2) }, null, true, 'America/Chicago');
+    new CronJob('00 00 16 * * 0-6', function() { menu(2) }, null, true, 'America/Chicago');
 }
 
 /* Screenshots/Crops Menu Page and Uploads to Twitter */
