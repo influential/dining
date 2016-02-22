@@ -84,9 +84,9 @@ function menu(meal) {
             tweet(ids.join(), meal);
         });
     } else {
-        if(day == 0) dinner = dinner.slice(0,2);
+        if(day == 0) dinner.splice(2, 1);
         if(day == 5) dinner = dinner.slice(0,3);
-        if(day == 6) dinner = dinner.splice(2, 1);
+        if(day == 6) dinner = dinner.slice(0,2);
         async.parallel(dinner, function(err, results) {
             if(err) return error(err);
             var ids = results.map(function(obj) { return obj[0].media_id_string });
